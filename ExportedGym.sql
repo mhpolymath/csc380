@@ -25,20 +25,24 @@ DROP TABLE IF EXISTS `booking`;
 CREATE TABLE IF NOT EXISTS `booking` (
   `M_id` int(11) NOT NULL,
   `C_id` int(11) NOT NULL,
-  PRIMARY KEY (`M_id`,`C_id`),
-  KEY `FK_booking_workout_class` (`C_id`),
-  KEY `FK_booking_member` (`M_id`,`C_id`) USING BTREE,
-  CONSTRAINT `FK_booking_member` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_booking_workout_class` FOREIGN KEY (`C_id`) REFERENCES `workout_class` (`C_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `Class_date` date NOT NULL,
+  `Class_time` time NOT NULL,
+  PRIMARY KEY (`M_id`,`C_id`,`Class_date`,`Class_time`),
+  KEY `fk_member_has_workout_class_workout_class1_idx` (`C_id`,`Class_date`,`Class_time`),
+  KEY `fk_member_has_workout_class_member1_idx` (`M_id`),
+  CONSTRAINT `fk_member_has_workout_class_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_member_has_workout_class_workout_class1` FOREIGN KEY (`C_id`, `Class_date`, `Class_time`) REFERENCES `workout_class` (`C_id`, `Class_date`, `Class_time`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.booking: ~4 rows (approximately)
+-- Dumping data for table gymerfinal.booking: ~6 rows (approximately)
 DELETE FROM `booking`;
-INSERT INTO `booking` (`M_id`, `C_id`) VALUES
-	(1, 15),
-	(2, 15),
-	(4, 15),
-	(5, 15);
+INSERT INTO `booking` (`M_id`, `C_id`, `Class_date`, `Class_time`) VALUES
+	(2, 8, '2024-11-30', '20:00:00'),
+	(2, 15, '2024-11-28', '13:30:00'),
+	(3, 15, '2024-11-28', '13:30:00'),
+	(4, 15, '2024-11-28', '13:30:00'),
+	(5, 15, '2024-11-28', '13:30:00'),
+	(6, 8, '2024-11-30', '20:00:00');
 
 -- Dumping structure for table gymerfinal.coach
 DROP TABLE IF EXISTS `coach`;
@@ -52,23 +56,21 @@ CREATE TABLE IF NOT EXISTS `coach` (
   PRIMARY KEY (`C_id`),
   UNIQUE KEY `C_phone` (`C_phone`),
   KEY `fk_coach_gym1_idx` (`Bno`),
-  CONSTRAINT `fk_coach_gym1` FOREIGN KEY (`Bno`) REFERENCES `gym` (`Bno`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_coach_gym1` FOREIGN KEY (`Bno`) REFERENCES `gym` (`Bno`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.coach: ~12 rows (approximately)
+-- Dumping data for table gymerfinal.coach: ~10 rows (approximately)
 DELETE FROM `coach`;
 INSERT INTO `coach` (`C_id`, `C_Fname`, `C_Lname`, `C_phone`, `Salary`, `Bno`) VALUES
 	(2, 'Mark', 'Smith', '0534567890', 1000, 4),
-	(3, 'Liam', 'Johnson', '0541239876', 5000, 2),
-	(6, 'Eva', 'Williams', '0563344556', 3000, 6),
+	(3, 'Liam', 'Johnson', '0541239876', 5000, 33),
 	(8, 'James', 'Taylor', '0538877665', 1000, 5),
 	(11, 'Thomas', 'White', '0561122334', 2000, 6),
-	(12, 'Ryan', 'Harris', '0531122334', 4000, 2),
+	(12, 'Ryan', 'Harris', '0531122334', 4000, 33),
 	(13, 'Ahmed', 'Omar', '0584433221', 900, 6),
-	(14, 'Zaid', 'Saleh', '0559988777', 1000, 5),
-	(15, 'Chris', 'Taylor', '0568899000', 900, 4),
-	(17, 'George', 'Walker', '0582233445', 1000, 2),
-	(33, 'tst', 'tst', '0590591000', 800, 2),
+	(14, 'Zaid', NULL, '0559988777', 1000, 5),
+	(15, 'Chris', 'Taylor', NULL, 900, 4),
+	(92, 'KAKA', NULL, NULL, NULL, 6),
 	(112, 'Khalid', 'Obaidah', '0501247652', NULL, 6);
 
 -- Dumping structure for table gymerfinal.fitness_data
@@ -97,13 +99,15 @@ CREATE TABLE IF NOT EXISTS `gym` (
   PRIMARY KEY (`Bno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.gym: ~4 rows (approximately)
+-- Dumping data for table gymerfinal.gym: ~5 rows (approximately)
 DELETE FROM `gym`;
 INSERT INTO `gym` (`Bno`, `B_name`, `Address`) VALUES
-	(2, 'Al Malaz', 'King Abdulaziz Road, Riyadh, KSA'),
 	(4, 'Al Sulaymaniyah', 'Tahlia Street, Riyadh, KSA'),
 	(5, 'Al Yasmin', 'King Salman Road, Riyadh, KSA'),
-	(6, 'Diriyah', 'Historic Diryah, Riyadh');
+	(6, 'Diriyah', 'Historic Diryah, Riyadh'),
+	(33, 'Jarir', 'King Abdullah Park, Riyadh, KSA'),
+	(34, 'Rawabi', 'Abdu,Jeddah,KSA'),
+	(55, 'Khaldiyah', 'Nassim,Jeddah');
 
 -- Dumping structure for table gymerfinal.member
 DROP TABLE IF EXISTS `member`;
@@ -132,36 +136,57 @@ DROP TABLE IF EXISTS `membership_at`;
 CREATE TABLE IF NOT EXISTS `membership_at` (
   `M_id` int(11) NOT NULL,
   `Bno` int(11) NOT NULL,
-  `Type` enum('Standard','VIP') DEFAULT NULL,
-  `Start_date` date DEFAULT NULL,
+  `Start_date` date NOT NULL,
   `End_date` date DEFAULT NULL,
-  PRIMARY KEY (`M_id`,`Bno`),
+  PRIMARY KEY (`M_id`,`Bno`,`Start_date`) USING BTREE,
   KEY `fk_member_has_gym_gym1_idx` (`Bno`),
   KEY `fk_member_has_gym_member1_idx` (`M_id`),
   CONSTRAINT `fk_member_has_gym_gym1` FOREIGN KEY (`Bno`) REFERENCES `gym` (`Bno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_member_has_gym_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.membership_at: ~1 rows (approximately)
+-- Dumping data for table gymerfinal.membership_at: ~2 rows (approximately)
 DELETE FROM `membership_at`;
+INSERT INTO `membership_at` (`M_id`, `Bno`, `Start_date`, `End_date`) VALUES
+	(99, 33, '2024-01-01', '2024-11-16'),
+	(99, 33, '2024-11-21', '2024-12-01');
 
 -- Dumping structure for table gymerfinal.workout_class
 DROP TABLE IF EXISTS `workout_class`;
 CREATE TABLE IF NOT EXISTS `workout_class` (
   `C_id` int(11) NOT NULL,
   `W_name` varchar(45) DEFAULT NULL,
-  `Class_date` date DEFAULT NULL,
-  `Class_time` time DEFAULT NULL,
-  `Max_capacity` int(11) DEFAULT NULL,
-  PRIMARY KEY (`C_id`),
+  `Class_date` date NOT NULL,
+  `Class_time` time NOT NULL,
+  `Max_capacity` int(11) NOT NULL DEFAULT 5,
+  PRIMARY KEY (`C_id`,`Class_date`,`Class_time`) USING BTREE,
+  UNIQUE KEY `C_id` (`C_id`),
   KEY `fk_workout_class_coach1_idx` (`C_id`),
   CONSTRAINT `fk_workout_class_coach1` FOREIGN KEY (`C_id`) REFERENCES `coach` (`C_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.workout_class: ~0 rows (approximately)
+-- Dumping data for table gymerfinal.workout_class: ~3 rows (approximately)
 DELETE FROM `workout_class`;
 INSERT INTO `workout_class` (`C_id`, `W_name`, `Class_date`, `Class_time`, `Max_capacity`) VALUES
-	(15, 'Abs', '2024-11-28', NULL, 5);
+	(8, 'Maxabs', '2024-11-30', '20:00:00', 8),
+	(13, 'Chest', '2024-11-29', '22:00:00', 7),
+	(15, 'Abs', '2024-11-28', '13:30:00', 5);
+
+-- Dumping structure for trigger gymerfinal.check_active_memberships_insert
+DROP TRIGGER IF EXISTS `check_active_memberships_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `check_active_memberships_insert` BEFORE INSERT ON `membership_at` FOR EACH ROW BEGIN
+    IF EXISTS (SELECT 1 FROM membership_at M WHERE M.M_id = NEW.M_id 
+	 AND M.Bno = NEW.Bno 
+	 AND CURDATE() >= M.Start_date AND  CURDATE() <= M.End_date)
+	 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'There is an active membership for this member at this branch.';
+    END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 -- Dumping structure for trigger gymerfinal.check_bf%_before_insert
 DROP TRIGGER IF EXISTS `check_bf%_before_insert`;
@@ -223,32 +248,6 @@ CREATE TRIGGER `Check_coaches_before_branch_delete` BEFORE DELETE ON `gym` FOR E
     IF EXISTS (SELECT 1 FROM coach WHERE coach.Bno = OLD.Bno) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'There are coaches in this branch in Table(coach), please move them to another branch before deleting this branch.';
-    END IF;
-END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
-
--- Dumping structure for trigger gymerfinal.Check_date_before_insert
-DROP TRIGGER IF EXISTS `Check_date_before_insert`;
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
-DELIMITER //
-CREATE TRIGGER `Check_date_before_insert` BEFORE INSERT ON `workout_class` FOR EACH ROW BEGIN
-    IF NEW.Class_date < CURDATE() THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Date cannot be earlier than today.';
-    END IF;
-END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
-
--- Dumping structure for trigger gymerfinal.Check_date_before_update
-DROP TRIGGER IF EXISTS `Check_date_before_update`;
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
-DELIMITER //
-CREATE TRIGGER `Check_date_before_update` BEFORE UPDATE ON `workout_class` FOR EACH ROW BEGIN
-    IF NEW.Class_date < CURDATE() THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Date cannot be earlier than today.';
     END IF;
 END//
 DELIMITER ;
@@ -316,29 +315,58 @@ END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
--- Dumping structure for trigger gymerfinal.Check_Max_Capacity_before_booking
-DROP TRIGGER IF EXISTS `Check_Max_Capacity_before_booking`;
+-- Dumping structure for trigger gymerfinal.check_max_capacity_before_insert
+DROP TRIGGER IF EXISTS `check_max_capacity_before_insert`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
-CREATE TRIGGER `Check_Max_Capacity_before_booking` BEFORE INSERT ON `booking` FOR EACH ROW BEGIN
-DECLARE current_booking_count INT;
+CREATE TRIGGER `check_max_capacity_before_insert` BEFORE INSERT ON `booking` FOR EACH ROW BEGIN
+    -- Declare a variable to store current booking count for this workout
 
-    -- Get the current booking count for the coach (C_id)
-    SELECT COUNT(*) INTO current_booking_count
+   
+   IF ((SELECT COUNT(*) 
     FROM booking
-    WHERE C_id = NEW.C_id;
-
-    -- Check if the count + 1 exceeds the max capacity of the class
-    IF current_booking_count + 1 > (
-        SELECT Max_capacity
-        FROM workout_class
-        WHERE C_id = NEW.C_id
-    ) THEN
-        -- Raise an error if the booking count exceeds the max capacity
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'This workout class is full.';
+    WHERE C_id = NEW.C_id
+    AND Class_date = NEW.Class_date
+    AND Class_time = NEW.Class_time) + 1) 
+	 
+	 > 
+	 
+	 (SELECT Max_capacity
+    FROM workout_class
+    WHERE C_id = NEW.C_id
+    AND Class_date = NEW.Class_date
+    AND Class_time = NEW.Class_time)
+    
+ THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This workout class is full.';
     END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
 
+-- Dumping structure for trigger gymerfinal.check_max_capacity_before_update
+DROP TRIGGER IF EXISTS `check_max_capacity_before_update`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `check_max_capacity_before_update` BEFORE UPDATE ON `booking` FOR EACH ROW BEGIN
+
+   IF ((SELECT COUNT(*) 
+    FROM booking
+    WHERE C_id = NEW.C_id
+    AND Class_date = NEW.Class_date
+    AND Class_time = NEW.Class_time) + 1) 
+	 
+	 > 
+	 
+	 (SELECT Max_capacity
+    FROM workout_class
+    WHERE C_id = NEW.C_id
+    AND Class_date = NEW.Class_date
+    AND Class_time = NEW.Class_time)
+    
+ THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This workout class is full.';
+    END IF;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -417,32 +445,6 @@ CREATE TRIGGER `Check_salary_before_update` BEFORE UPDATE ON `coach` FOR EACH RO
     IF NEW.Salary < 800 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Salary must be greater than or equal to 800 SAR.';
-    END IF;
-END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
-
--- Dumping structure for trigger gymerfinal.Check_time_before_insert
-DROP TRIGGER IF EXISTS `Check_time_before_insert`;
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
-DELIMITER //
-CREATE TRIGGER `Check_time_before_insert` BEFORE INSERT ON `workout_class` FOR EACH ROW BEGIN
-    IF NEW.Class_time < CURTIME() THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Time cannot be earlier than current time.';
-    END IF;
-END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
-
--- Dumping structure for trigger gymerfinal.Check_time_before_update
-DROP TRIGGER IF EXISTS `Check_time_before_update`;
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
-DELIMITER //
-CREATE TRIGGER `Check_time_before_update` BEFORE UPDATE ON `workout_class` FOR EACH ROW BEGIN
-    IF NEW.Class_time < CURTIME() THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Time cannot be earlier than current time.';
     END IF;
 END//
 DELIMITER ;
