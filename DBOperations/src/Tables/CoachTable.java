@@ -168,45 +168,6 @@ public class CoachTable implements Relation<Coach>{
 	    return new DefaultTableModel(data, columnNames);
 	}
 	
-	public DefaultTableModel selectByName(Coach coach) {
-		String columnNames[] = {"Coach ID","First Name","Last Name","Phone","Salary","Branch"};
-		Object[][] data =null;
-		String condition = " WHERE C.C_Fname LIKE ? AND C.C_Lname LIKE ?";
-		String query = noConditionQuery() + selectionSourceQuery() + condition;
-		String countQuery =  "SELECT COUNT(*) AS Row_count" + selectionSourceQuery() + condition;
-		
-		Connection connection = null;
-		try {
-			connection = DatabaseOperation.getConnection();
-			PreparedStatement stmt = connection.prepareStatement(query);
-			PreparedStatement countStmt = connection.prepareStatement(countQuery);
-			stmt.setString(1, "%" + coach.getFirstName() + "%");
-			stmt.setString(2, "%" + coach.getLastName() + "%");
-			
-			countStmt.setString(1, "%" + coach.getFirstName() + "%");
-			countStmt.setString(2, "%" + coach.getLastName() + "%");
-			
-			ResultSet rs = stmt.executeQuery();
-			ResultSet countSet = countStmt.executeQuery();
-			countSet.next();
-			int tableSize = countSet.getInt("Row_count");
-			data = new Object[tableSize][columnNames.length];
-			int rowIndex = 0;
-			while(rs.next()) 
-				assignAttributesToRow(rs, rowIndex++, data);
-				
-			
-			
-		}catch(SQLException e) {
-			DatabaseOperation.showErrorMessage(e.getMessage());
-		}
-		finally {
-			DatabaseOperation.closeConnection(connection);
-		}
-
-
-	    return new DefaultTableModel(data, columnNames);
-	}
 	
 	public DefaultTableModel selectByBranch(Gym gym) {
 		String columnNames[] = {"Coach ID","First Name","Last Name","Phone","Salary","Branch"};
@@ -281,7 +242,7 @@ public class CoachTable implements Relation<Coach>{
 	    return new DefaultTableModel(data, columnNames);
 	}
 
-	public List<String> getAllKeys() {
+	public List<String> getAllCoaches() {
 		String query = "SELECT * FROM Coach";
 		List<String> selectedResult = new ArrayList<>();
 		

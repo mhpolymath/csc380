@@ -127,26 +127,22 @@ public class WorkoutTable implements Relation<Workout> {
     	return " ORDER BY WC.Class_date,WC.Class_time";
     }
     // Method to select workouts by specific workout keys
-    public DefaultTableModel selectByKeys(Workout workout) {
+    public DefaultTableModel selectByCoach(Workout workout) {
         String columnNames[] = {"Coach ID", "Coach Name", "Workout Name", "Workout Date", "Workout Time", "Current Bookings"};
         Connection connection = null;
         Object data[][] = null;
-        String condition = " WHERE WC.C_id = ? AND WC.W_name = ? AND WC.Class_date = ? AND WC.Class_time = ?";
+        String condition = " WHERE WC.C_id = ?";
         String query = noConditionQuery() + selectionSourceQuery() + condition + groupBy() + orderBy();
         String countQuery = "SELECT COUNT(DISTINCT WC.C_id) AS Row_count" + selectionSourceQuery() + condition;
         try {
             connection = DatabaseOperation.getConnection();
             PreparedStatement stmt = connection.prepareStatement(query);
             DatabaseOperation.setInt(stmt, 1, workout.getCoachId());
-            stmt.setString(2, workout.getWorkoutName());
-            stmt.setDate(3, workout.getWorkoutDate());
-            stmt.setTime(4, workout.getWorkoutTime());
+           
             
             PreparedStatement countStmt = connection.prepareStatement(countQuery);
             DatabaseOperation.setInt(countStmt, 1, workout.getCoachId());
-            countStmt.setString(2, workout.getWorkoutName());
-            countStmt.setDate(3, workout.getWorkoutDate());
-            countStmt.setTime(4, workout.getWorkoutTime());
+           
             
             ResultSet rs = stmt.executeQuery();
             ResultSet countSet = countStmt.executeQuery();
@@ -165,40 +161,6 @@ public class WorkoutTable implements Relation<Workout> {
         return new DefaultTableModel(data, columnNames);
     }
 
-    // Method to select workouts by coach name
-    public DefaultTableModel selectByCoachName(Coach coach) {
-        String columnNames[] = {"Coach ID", "Coach Name", "Workout Name", "Workout Date", "Workout Time", "Current Bookings"};
-        Connection connection = null;
-        Object data[][] = null;
-        String condition = " WHERE C.C_Fname LIKE ? AND C.C_Lname LIKE ?";
-        String query = noConditionQuery() + selectionSourceQuery() + condition + groupBy() + orderBy();
-        String countQuery = "SELECT COUNT(DISTINCT WC.C_id) AS Row_count" + selectionSourceQuery() + condition;
-        try {
-            connection = DatabaseOperation.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, "%" + coach.getFirstName() + "%");
-            stmt.setString(2, "%" + coach.getLastName() + "%");
-            
-            PreparedStatement countStmt = connection.prepareStatement(countQuery);
-            countStmt.setString(1, "%" + coach.getFirstName() + "%");
-            countStmt.setString(2, "%" + coach.getLastName() + "%");
-            
-            ResultSet rs = stmt.executeQuery();
-            ResultSet countSet = countStmt.executeQuery();
-            countSet.next();
-            
-            int tableSize = countSet.getInt("Row_count");
-            data = new Object[tableSize][columnNames.length];
-            int rowIndex = 0;
-            while(rs.next()) 
-                assignAttributesToTableRow(rs, rowIndex++, data);
-        } catch (SQLException e) {
-            DatabaseOperation.showErrorMessage(e.getMessage());
-        } finally {
-            DatabaseOperation.closeConnection(connection);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
 
     // Method to select workouts by date and time range
     public DefaultTableModel selectByDateTime(Date startDate, Date endDate, Time startTime, Time endTime) {
@@ -278,7 +240,7 @@ public class WorkoutTable implements Relation<Workout> {
 
     }
     
-    public List<String> getAllKeys(){
+    public List<String> getAllCoaches(){
     	
     	
     	String query = "SELECT C_id, CONCAT(C_Fname,\' \',C_Lname) AS Full_name FROM Coach";
