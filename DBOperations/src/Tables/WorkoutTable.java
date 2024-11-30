@@ -48,13 +48,13 @@ public class WorkoutTable implements Relation<Workout> {
         Connection connection = null;
         try {
             connection = DatabaseOperation.getConnection();
-            String deleteQuery = "DELETE FROM workout_class WHERE C_id = ? AND W_name = ? AND Class_date = ? AND Class_time = ?";
+            String deleteQuery = "DELETE FROM workout_class WHERE C_id = ? AND Class_date = ? AND Class_time = ?";
             PreparedStatement stmt = connection.prepareStatement(deleteQuery);
             
             DatabaseOperation.setInt(stmt, 1, workout.getCoachId());
-            stmt.setString(2, workout.getWorkoutName());
-            stmt.setDate(3, workout.getWorkoutDate());
-            stmt.setTime(4, workout.getWorkoutTime());
+            
+            stmt.setDate(2, workout.getWorkoutDate());
+            stmt.setTime(3, workout.getWorkoutTime());
             
             int result = stmt.executeUpdate();
             if(result == 1)
@@ -73,7 +73,7 @@ public class WorkoutTable implements Relation<Workout> {
         Connection connection = null;
         try {
             connection = DatabaseOperation.getConnection();
-            String updateQuery = "UPDATE workout_class SET W_name = ?, Class_date = ?, Class_time = ?, Max_capacity = ? WHERE C_id = ? AND W_name = ? AND Class_date = ? AND Class_time = ?";
+            String updateQuery = "UPDATE workout_class SET W_name = ?, Class_date = ?, Class_time = ?, Max_capacity = ? WHERE C_id = ? AND Class_date = ? AND Class_time = ?";
             PreparedStatement stmt = connection.prepareStatement(updateQuery);
             
             stmt.setString(1, newElement.getWorkoutName());
@@ -81,9 +81,9 @@ public class WorkoutTable implements Relation<Workout> {
             stmt.setTime(3, newElement.getWorkoutTime());
             DatabaseOperation.setInt(stmt, 4, newElement.getMaxCapacity());
             DatabaseOperation.setInt(stmt, 5, oldElement.getCoachId());
-            stmt.setString(6, oldElement.getWorkoutName());
-            stmt.setDate(7, oldElement.getWorkoutDate());
-            stmt.setTime(8, oldElement.getWorkoutTime());
+            
+            stmt.setDate(6, oldElement.getWorkoutDate());
+            stmt.setTime(7, oldElement.getWorkoutTime());
             
             int result = stmt.executeUpdate();
             if(result == 1)
