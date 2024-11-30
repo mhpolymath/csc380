@@ -30,19 +30,17 @@ CREATE TABLE IF NOT EXISTS `booking` (
   PRIMARY KEY (`M_id`,`C_id`,`Class_date`,`Class_time`),
   KEY `fk_member_has_workout_class_workout_class1_idx` (`C_id`,`Class_date`,`Class_time`),
   KEY `fk_member_has_workout_class_member1_idx` (`M_id`),
-  CONSTRAINT `fk_member_has_workout_class_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_member_has_workout_class_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_member_has_workout_class_workout_class1` FOREIGN KEY (`C_id`, `Class_date`, `Class_time`) REFERENCES `workout_class` (`C_id`, `Class_date`, `Class_time`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.booking: ~6 rows (approximately)
+-- Dumping data for table gymerfinal.booking: ~3 rows (approximately)
 DELETE FROM `booking`;
 INSERT INTO `booking` (`M_id`, `C_id`, `Class_date`, `Class_time`) VALUES
 	(2, 8, '2024-11-30', '20:00:00'),
-	(2, 15, '2024-11-28', '13:30:00'),
 	(3, 15, '2024-11-28', '13:30:00'),
 	(4, 15, '2024-11-28', '13:30:00'),
-	(5, 15, '2024-11-28', '13:30:00'),
-	(6, 8, '2024-11-30', '20:00:00');
+	(5, 15, '2024-11-28', '13:30:00');
 
 -- Dumping structure for table gymerfinal.coach
 DROP TABLE IF EXISTS `coach`;
@@ -87,8 +85,11 @@ CREATE TABLE IF NOT EXISTS `fitness_data` (
   CONSTRAINT `fk_FITNESS_DATA_MEMBER1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.fitness_data: ~0 rows (approximately)
+-- Dumping data for table gymerfinal.fitness_data: ~2 rows (approximately)
 DELETE FROM `fitness_data`;
+INSERT INTO `fitness_data` (`M_id`, `Record_number`, `Record_date`, `Height`, `Weight`, `Fat_rate`, `Muscle_mass`) VALUES
+	(1, 2, NULL, NULL, NULL, NULL, NULL),
+	(99, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- Dumping structure for table gymerfinal.gym
 DROP TABLE IF EXISTS `gym`;
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   UNIQUE KEY `M_phone` (`M_phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.member: ~7 rows (approximately)
+-- Dumping data for table gymerfinal.member: ~11 rows (approximately)
 DELETE FROM `member`;
 INSERT INTO `member` (`M_id`, `M_Fname`, `M_Lname`, `M_phone`) VALUES
 	(1, 'Faisal', 'Alharbi', '0501010550'),
@@ -128,8 +129,8 @@ INSERT INTO `member` (`M_id`, `M_Fname`, `M_Lname`, `M_phone`) VALUES
 	(3, 'Mohammed', 'Alshehri', '0548765432'),
 	(4, 'Sultan', 'Aldosari', '0561122334'),
 	(5, 'Turki', 'Almutairi', '0554455667'),
-	(6, 'Saud', 'Aljuhani', '0583344556'),
-	(99, 'Abdulkhaliq', 'Khan', '0501010551');
+	(12, 'Khad', 'Chad', '0501491491'),
+	(99, 'AbdulKhallaq', 'Khan', '0501010551');
 
 -- Dumping structure for table gymerfinal.membership_at
 DROP TABLE IF EXISTS `membership_at`;
@@ -145,9 +146,10 @@ CREATE TABLE IF NOT EXISTS `membership_at` (
   CONSTRAINT `fk_member_has_gym_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.membership_at: ~2 rows (approximately)
+-- Dumping data for table gymerfinal.membership_at: ~3 rows (approximately)
 DELETE FROM `membership_at`;
 INSERT INTO `membership_at` (`M_id`, `Bno`, `Start_date`, `End_date`) VALUES
+	(99, 4, '2025-11-30', '2053-11-30'),
 	(99, 33, '2024-01-01', '2024-11-16'),
 	(99, 33, '2024-11-21', '2024-12-01');
 
