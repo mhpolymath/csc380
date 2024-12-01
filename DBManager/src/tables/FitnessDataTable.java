@@ -192,6 +192,33 @@ public class FitnessDataTable implements Relation<FitnessData> {
         return members;
     }
 
+    public List<Member> getAllMembersObj(){
+        String query = "SELECT F.M_id, CONCAT(M_Fname, \' \', M_Lname) AS Full_name "
+                + "FROM Member M INNER JOIN fitness_data F ON M.M_id = F.M_id";
+
+        Connection connection = null;
+        List<Member> members = new ArrayList<>();
+
+        try {
+            connection = DatabaseOperation.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                int memberId = resultSet.getInt("M_id");
+                String fullName = resultSet.getString("Full_name");
+                members.add(new Member(memberId));
+            }
+        } catch (SQLException e) {
+            DatabaseOperation.showErrorMessage(e.getMessage());
+        } finally {
+            DatabaseOperation.closeConnection(connection);
+        }
+
+        return members;
+    }
+
     public List<String> getMembersRelevantTo(Integer recordNumber) {
         String query = "SELECT DISTINCT M.M_id,CONCAT(M_Fname,\' \',M_Lname) AS Full_name\n"
                 + " FROM fitness_data F INNER JOIN member M ON F.M_id = M.M_id \n"
