@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTable;
+
 import javax.swing.table.DefaultTableModel;
 
 import database.DatabaseOperation;
-import entities.FitnessData;
+
 import entities.Gym;
 import entities.Member;
 import entities.Membership;
@@ -59,16 +59,18 @@ public class MembershipTable implements Relation<Membership> {
 // Update existing membership record
     @Override
     public int update(Membership oldElement, Membership newElement) throws SQLException {
-        String query = "UPDATE membership_at SET Start_date = ?, End_date = ? WHERE M_id = ? AND Bno = ?";
+        String query = "UPDATE membership_at SET M_id = ?, Bno = ?,Start_date = ?, End_date = ? WHERE M_id = ? AND Bno = ?";
         Connection connection = null;
         try {
             connection = DatabaseOperation.getConnection();
             PreparedStatement stmt = connection.prepareStatement(query);
-
-            DatabaseOperation.setDate(stmt, 1, newElement.getStartDate());
-            DatabaseOperation.setDate(stmt, 2, newElement.getEndDate());
-            DatabaseOperation.setInt(stmt, 3, oldElement.getMemberId());
-            DatabaseOperation.setInt(stmt, 4, oldElement.getBno());
+            DatabaseOperation.setInt(stmt, 1, newElement.getMemberId());
+            DatabaseOperation.setInt(stmt, 2, newElement.getBno());
+            
+            DatabaseOperation.setDate(stmt, 3, newElement.getStartDate());
+            DatabaseOperation.setDate(stmt, 4, newElement.getEndDate());
+            DatabaseOperation.setInt(stmt, 5, oldElement.getMemberId());
+            DatabaseOperation.setInt(stmt, 6, oldElement.getBno());
 
             return stmt.executeUpdate();
         } finally {
@@ -102,7 +104,7 @@ public class MembershipTable implements Relation<Membership> {
     public DefaultTableModel loadTableActiveMemberhips() {
         String columnNames[] = {"Member ID", "Member Name", "Branch Number", "Branch Name", "Start Date", "End Date"};
         Object[][] data = null;
-        String condition = " WHERE Start_date <= CURDATE() AND End_date >= CURDATE()";
+        String condition = " WHERE End_date >= CURDATE()";
         String query = noConditionQuery() + selectionSourceQuery() + condition + orderBy();
         String countQuery = "SELECT COUNT(*) AS Row_count" + selectionSourceQuery() + condition;
 

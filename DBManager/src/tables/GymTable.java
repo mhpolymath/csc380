@@ -185,7 +185,7 @@ public class GymTable implements Relation<Gym> {
         return new DefaultTableModel(data, columnNames);
     }
 
-    public List<String> getAllKeys() {
+    public List<String> getAllGyms() {
         String query = "SELECT Bno, B_name FROM Gym";
         List<String> selectedResult = new ArrayList<>();
 
