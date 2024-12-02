@@ -6,17 +6,25 @@ package gui;
 
 import database.DatabaseOperation;
 import entities.Member;
+import entities.Membership;
+import java.awt.Component;
 import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import tables.MemberTable;
+import com.toedter.calendar.JDateChooser;
+import entities.Booking;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import tables.*;
 
 /**
  *
  * @author OAK-1
  */
-
 public class MainFrame extends javax.swing.JFrame {
 
     /**
@@ -57,7 +65,69 @@ public class MainFrame extends javax.swing.JFrame {
         txt_update_memberID = new javax.swing.JTextField();
         label_memberID1 = new javax.swing.JLabel();
         btn_updateMemberConfirm = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jframe_insertMembership = new javax.swing.JFrame();
+        panel_ofFrame_insertMembershipForm = new javax.swing.JPanel();
+        cb_memberIdInsertMembership = new javax.swing.JComboBox<>();
+        label_memberInsertMembership = new javax.swing.JLabel();
+        cb_gymBranchInsertMembership = new javax.swing.JComboBox<>();
+        label_gymBranchInsertMembership = new javax.swing.JLabel();
+        datechooser_startDateInsertMembership = new com.toedter.calendar.JDateChooser();
+        datechooser_endDateInsertMembership = new com.toedter.calendar.JDateChooser();
+        label_startDateInsertMembership = new javax.swing.JLabel();
+        label_endDateInsertMembership = new javax.swing.JLabel();
+        btn_insertMembershipConfirm = new javax.swing.JButton();
+        jframe_updateMembership = new javax.swing.JFrame();
+        panel_ofFrame_updateMembershipForm = new javax.swing.JPanel();
+        cb_memberIdUpdateMembership = new javax.swing.JComboBox<>();
+        label_memberUpdateMembership = new javax.swing.JLabel();
+        cb_gymBranchUpdateMembership = new javax.swing.JComboBox<>();
+        label_gymBranchUpdateMembership = new javax.swing.JLabel();
+        datechooser_startDateUpdateMembership = new com.toedter.calendar.JDateChooser();
+        datechooser_endDateUpdateMembership = new com.toedter.calendar.JDateChooser();
+        label_startDateUpdateMembership = new javax.swing.JLabel();
+        label_endDateUpdateMembership = new javax.swing.JLabel();
+        btn_updateMembershipConfirm = new javax.swing.JButton();
+        jframe_insertBooking = new javax.swing.JFrame();
+        panel_ofFrame_insertBookingForm = new javax.swing.JPanel();
+        cb_insertBookingMember = new javax.swing.JComboBox<>();
+        cb_insertBookingCoach = new javax.swing.JComboBox<>();
+        cb_insertBookingDate = new javax.swing.JComboBox<>();
+        cb_insertBookingTime = new javax.swing.JComboBox<>();
+        label_coachInsertBooking = new javax.swing.JLabel();
+        label_memberInsertBooking = new javax.swing.JLabel();
+        label_dateInsertBooking = new javax.swing.JLabel();
+        label_timeInsertBooking = new javax.swing.JLabel();
+        btn_clearSelectionBookingInsert = new javax.swing.JButton();
+        btn_confirmInsertBooking = new javax.swing.JButton();
+        jframe_updateBooking = new javax.swing.JFrame();
+        panel_ofFrame_updateBookingForm = new javax.swing.JPanel();
+        cb_updateBookingMember = new javax.swing.JComboBox<>();
+        cb_updateBookingCoach = new javax.swing.JComboBox<>();
+        cb_updateBookingDate = new javax.swing.JComboBox<>();
+        cb_updateBookingTime = new javax.swing.JComboBox<>();
+        label_coachUpdateBooking = new javax.swing.JLabel();
+        label_memberUpdateBooking = new javax.swing.JLabel();
+        label_dateUpdateBooking = new javax.swing.JLabel();
+        label_timeUpdateBooking = new javax.swing.JLabel();
+        btn_clearSelectionBookingUpdate = new javax.swing.JButton();
+        btn_updateBookingConfirm = new javax.swing.JButton();
+        main_tabbedPane = new javax.swing.JTabbedPane();
+        panel_membership = new javax.swing.JPanel();
+        scrlpn_tableMembership = new javax.swing.JScrollPane();
+        jtable_membership = new javax.swing.JTable();
+        label_membershipTable = new javax.swing.JLabel();
+        btn_membershipInsert = new javax.swing.JButton();
+        btn_membershipDelete = new javax.swing.JButton();
+        btn_updateMembership = new javax.swing.JButton();
+        btn_resetFilterMembership = new javax.swing.JButton();
+        btn_activeMemberships = new javax.swing.JButton();
+        panel_booking = new javax.swing.JPanel();
+        scrlpn_tableBooking = new javax.swing.JScrollPane();
+        jtable_booking = new javax.swing.JTable();
+        label_bookingTable = new javax.swing.JLabel();
+        btn_bookingInsert = new javax.swing.JButton();
+        btn_bookingDelete = new javax.swing.JButton();
+        btn_updateBooking = new javax.swing.JButton();
         panel_member = new javax.swing.JPanel();
         scrlpn_tableMember = new javax.swing.JScrollPane();
         jtable_member = new javax.swing.JTable();
@@ -71,7 +141,6 @@ public class MainFrame extends javax.swing.JFrame {
         label_firstNameFiltermembertbl = new javax.swing.JLabel();
         label_lastNameFiltermembertbl = new javax.swing.JLabel();
         btn_confirmFilterMembertbl = new javax.swing.JButton();
-        panel_gym = new javax.swing.JPanel();
 
         jframe_insertMember.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jframe_insertMember.setTitle("Insert");
@@ -307,12 +376,728 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(panel_ofFrame_updateMemberForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jframe_insertMembership.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jframe_insertMembership.setTitle("Insert");
+        jframe_insertMembership.setAlwaysOnTop(true);
+        jframe_insertMembership.setMinimumSize(new java.awt.Dimension(1000, 1000));
+        jframe_insertMembership.setResizable(false);
+        jframe_insertMembership.setVisible(false);
+        jframe_insertMembership.pack();
+        jframe_insertMembership.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        panel_ofFrame_insertMembershipForm.setMinimumSize(new java.awt.Dimension(1000, 1000));
+
+        cb_memberIdInsertMembership.setModel(new DefaultComboBoxModel<>(new MemberTable().getAllMembers().toArray(new String[0])));
+
+        label_memberInsertMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_memberInsertMembership.setText("Member");
+
+        cb_gymBranchInsertMembership.setModel(new DefaultComboBoxModel<>(new GymTable().getAllGyms().toArray(new String[0])));
+
+        label_gymBranchInsertMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_gymBranchInsertMembership.setText("Gym Branch");
+
+        label_startDateInsertMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_startDateInsertMembership.setText("Start Date");
+
+        label_endDateInsertMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_endDateInsertMembership.setText("End Date");
+
+        btn_insertMembershipConfirm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btn_insertMembershipConfirm.setText("Submit");
+        btn_insertMembershipConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_insertMembershipConfirmMouseClicked(evt);
+            }
+        });
+        btn_insertMembershipConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_insertMembershipConfirmActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_ofFrame_insertMembershipFormLayout = new javax.swing.GroupLayout(panel_ofFrame_insertMembershipForm);
+        panel_ofFrame_insertMembershipForm.setLayout(panel_ofFrame_insertMembershipFormLayout);
+        panel_ofFrame_insertMembershipFormLayout.setHorizontalGroup(
+            panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_insertMembershipFormLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cb_memberIdInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_memberInsertMembership))
+                .addGap(55, 55, 55)
+                .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cb_gymBranchInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_gymBranchInsertMembership))
+                .addGap(49, 49, 49)
+                .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_insertMembershipConfirm)
+                    .addGroup(panel_ofFrame_insertMembershipFormLayout.createSequentialGroup()
+                        .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_startDateInsertMembership)
+                            .addComponent(datechooser_startDateInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(83, 83, 83)
+                        .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_endDateInsertMembership)
+                            .addComponent(datechooser_endDateInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+        panel_ofFrame_insertMembershipFormLayout.setVerticalGroup(
+            panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_insertMembershipFormLayout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_memberInsertMembership)
+                    .addComponent(label_gymBranchInsertMembership)
+                    .addComponent(label_startDateInsertMembership)
+                    .addComponent(label_endDateInsertMembership))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ofFrame_insertMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cb_memberIdInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_gymBranchInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datechooser_startDateInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datechooser_endDateInsertMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(161, 161, 161)
+                .addComponent(btn_insertMembershipConfirm)
+                .addContainerGap(645, Short.MAX_VALUE))
+        );
+
+        jframe_insertMembership.getContentPane().add(panel_ofFrame_insertMembershipForm);
+
+        jframe_updateMembership.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jframe_updateMembership.setTitle("Update");
+        jframe_updateMembership.setAlwaysOnTop(true);
+        jframe_updateMembership.setMinimumSize(new java.awt.Dimension(1000, 1000));
+        jframe_updateMembership.setResizable(false);
+        jframe_insertMembership.setVisible(false);
+        jframe_insertMembership.pack();
+        jframe_updateMembership.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        panel_ofFrame_updateMembershipForm.setMinimumSize(new java.awt.Dimension(1000, 1000));
+
+        cb_memberIdUpdateMembership.setModel(new DefaultComboBoxModel<>(new MemberTable().getAllMembers().toArray(new String[0])));
+        cb_memberIdUpdateMembership.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_memberIdUpdateMembershipActionPerformed(evt);
+            }
+        });
+
+        label_memberUpdateMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_memberUpdateMembership.setText("Member");
+
+        cb_gymBranchUpdateMembership.setModel(new DefaultComboBoxModel<>(new GymTable().getAllGyms().toArray(new String[0])));
+
+        label_gymBranchUpdateMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_gymBranchUpdateMembership.setText("Gym Branch");
+
+        label_startDateUpdateMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_startDateUpdateMembership.setText("Start Date");
+
+        label_endDateUpdateMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_endDateUpdateMembership.setText("End Date");
+
+        btn_updateMembershipConfirm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btn_updateMembershipConfirm.setText("Submit");
+        btn_updateMembershipConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_updateMembershipConfirmMouseClicked(evt);
+            }
+        });
+        btn_updateMembershipConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateMembershipConfirmActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_ofFrame_updateMembershipFormLayout = new javax.swing.GroupLayout(panel_ofFrame_updateMembershipForm);
+        panel_ofFrame_updateMembershipForm.setLayout(panel_ofFrame_updateMembershipFormLayout);
+        panel_ofFrame_updateMembershipFormLayout.setHorizontalGroup(
+            panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_updateMembershipFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_memberUpdateMembership)
+                    .addComponent(cb_memberIdUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_gymBranchUpdateMembership)
+                    .addComponent(cb_gymBranchUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_updateMembershipConfirm)
+                    .addGroup(panel_ofFrame_updateMembershipFormLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_startDateUpdateMembership)
+                            .addComponent(datechooser_startDateUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(datechooser_endDateUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_endDateUpdateMembership))))
+                .addContainerGap(207, Short.MAX_VALUE))
+        );
+        panel_ofFrame_updateMembershipFormLayout.setVerticalGroup(
+            panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_updateMembershipFormLayout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_memberUpdateMembership)
+                    .addComponent(label_gymBranchUpdateMembership)
+                    .addComponent(label_startDateUpdateMembership)
+                    .addComponent(label_endDateUpdateMembership))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ofFrame_updateMembershipFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cb_memberIdUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_gymBranchUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datechooser_startDateUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datechooser_endDateUpdateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(161, 161, 161)
+                .addComponent(btn_updateMembershipConfirm)
+                .addContainerGap(645, Short.MAX_VALUE))
+        );
+
+        jframe_updateMembership.getContentPane().add(panel_ofFrame_updateMembershipForm);
+
+        jframe_insertBooking.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jframe_insertBooking.setTitle("Insert");
+        jframe_insertBooking.setAlwaysOnTop(true);
+        jframe_insertBooking.setMinimumSize(new java.awt.Dimension(1000, 1000));
+        jframe_insertBooking.setResizable(false);
+        jframe_insertMembership.setVisible(false);
+        jframe_insertMembership.pack();
+        jframe_insertBooking.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        panel_ofFrame_insertBookingForm.setMinimumSize(new java.awt.Dimension(1000, 1000));
+
+        cb_insertBookingMember.setModel(new DefaultComboBoxModel<String>(new BookingTable().getMembersRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_insertBookingMember.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_insertBookingMemberItemStateChanged(evt);
+            }
+        });
+
+        cb_insertBookingCoach.setModel(new DefaultComboBoxModel<String>(new BookingTable().getCoachesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_insertBookingCoach.setEnabled(false);
+        cb_insertBookingCoach.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_insertBookingCoachItemStateChanged(evt);
+            }
+        });
+
+        cb_insertBookingDate.setModel(new DefaultComboBoxModel<String>(new BookingTable().getDatesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_insertBookingDate.setEnabled(false);
+        cb_insertBookingDate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_insertBookingDateItemStateChanged(evt);
+            }
+        });
+
+        cb_insertBookingTime.setModel(new DefaultComboBoxModel<String>(new BookingTable().getTimesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_insertBookingTime.setEnabled(false);
+        cb_insertBookingTime.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_insertBookingTimeItemStateChanged(evt);
+            }
+        });
+
+        label_coachInsertBooking.setText("Coach");
+
+        label_memberInsertBooking.setText("Member");
+
+        label_dateInsertBooking.setText("Workout Date");
+
+        label_timeInsertBooking.setText("Workout Time");
+
+        btn_clearSelectionBookingInsert.setText("Clear Selection");
+        btn_clearSelectionBookingInsert.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_clearSelectionBookingInsertMouseClicked(evt);
+            }
+        });
+
+        btn_confirmInsertBooking.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_confirmInsertBooking.setText("Submit");
+        btn_confirmInsertBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmInsertBookingActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_ofFrame_insertBookingFormLayout = new javax.swing.GroupLayout(panel_ofFrame_insertBookingForm);
+        panel_ofFrame_insertBookingForm.setLayout(panel_ofFrame_insertBookingFormLayout);
+        panel_ofFrame_insertBookingFormLayout.setHorizontalGroup(
+            panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_insertBookingFormLayout.createSequentialGroup()
+                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ofFrame_insertBookingFormLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_clearSelectionBookingInsert)
+                            .addGroup(panel_ofFrame_insertBookingFormLayout.createSequentialGroup()
+                                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_memberInsertBooking)
+                                    .addComponent(cb_insertBookingMember, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(68, 68, 68)
+                                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_insertBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_dateInsertBooking))
+                                .addGap(66, 66, 66)
+                                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_insertBookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_timeInsertBooking))
+                                .addGap(47, 47, 47)
+                                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_coachInsertBooking)
+                                    .addComponent(cb_insertBookingCoach, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(panel_ofFrame_insertBookingFormLayout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(btn_confirmInsertBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(250, Short.MAX_VALUE))
+        );
+        panel_ofFrame_insertBookingFormLayout.setVerticalGroup(
+            panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_insertBookingFormLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(btn_clearSelectionBookingInsert)
+                .addGap(32, 32, 32)
+                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_memberInsertBooking)
+                    .addComponent(label_dateInsertBooking)
+                    .addComponent(label_timeInsertBooking)
+                    .addComponent(label_coachInsertBooking))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_ofFrame_insertBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_insertBookingMember, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_insertBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_insertBookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_insertBookingCoach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(152, 152, 152)
+                .addComponent(btn_confirmInsertBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(675, Short.MAX_VALUE))
+        );
+
+        jframe_insertBooking.getContentPane().add(panel_ofFrame_insertBookingForm);
+        clearBookingInsertComboBoxes();
+
+        jframe_updateBooking.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jframe_updateBooking.setTitle("Update");
+        jframe_updateBooking.setAlwaysOnTop(true);
+        jframe_updateBooking.setMinimumSize(new java.awt.Dimension(1000, 1000));
+        jframe_updateBooking.setResizable(false);
+        jframe_insertMembership.setVisible(false);
+        jframe_insertMembership.pack();
+        jframe_updateBooking.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        panel_ofFrame_updateBookingForm.setMinimumSize(new java.awt.Dimension(1000, 1000));
+
+        cb_updateBookingMember.setModel(new DefaultComboBoxModel<String>(new BookingTable().getMembersRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_updateBookingMember.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_updateBookingMemberItemStateChanged(evt);
+            }
+        });
+
+        cb_updateBookingCoach.setModel(new DefaultComboBoxModel<String>(new BookingTable().getCoachesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_updateBookingCoach.setEnabled(false);
+        cb_updateBookingCoach.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_updateBookingCoachItemStateChanged(evt);
+            }
+        });
+
+        cb_updateBookingDate.setModel(new DefaultComboBoxModel<String>(new BookingTable().getDatesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_updateBookingDate.setEnabled(false);
+        cb_updateBookingDate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_updateBookingDateItemStateChanged(evt);
+            }
+        });
+
+        cb_updateBookingTime.setModel(new DefaultComboBoxModel<String>(new BookingTable().getTimesRelevantTo(null,null,null).toArray(new String[0]))
+        );
+        cb_updateBookingTime.setEnabled(false);
+        cb_updateBookingTime.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_updateBookingTimeItemStateChanged(evt);
+            }
+        });
+
+        label_coachUpdateBooking.setText("Coach");
+
+        label_memberUpdateBooking.setText("Member");
+
+        label_dateUpdateBooking.setText("Workout Date");
+
+        label_timeUpdateBooking.setText("Workout Time");
+
+        btn_clearSelectionBookingUpdate.setText("Clear Selection");
+        btn_clearSelectionBookingUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_clearSelectionBookingUpdateMouseClicked(evt);
+            }
+        });
+
+        btn_updateBookingConfirm.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_updateBookingConfirm.setText("Submit");
+        btn_updateBookingConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_updateBookingConfirmMouseClicked(evt);
+            }
+        });
+        btn_updateBookingConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateBookingConfirmActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_ofFrame_updateBookingFormLayout = new javax.swing.GroupLayout(panel_ofFrame_updateBookingForm);
+        panel_ofFrame_updateBookingForm.setLayout(panel_ofFrame_updateBookingFormLayout);
+        panel_ofFrame_updateBookingFormLayout.setHorizontalGroup(
+            panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_updateBookingFormLayout.createSequentialGroup()
+                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ofFrame_updateBookingFormLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_clearSelectionBookingUpdate)
+                            .addGroup(panel_ofFrame_updateBookingFormLayout.createSequentialGroup()
+                                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_memberUpdateBooking)
+                                    .addComponent(cb_updateBookingMember, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(68, 68, 68)
+                                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_updateBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_dateUpdateBooking))
+                                .addGap(66, 66, 66)
+                                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_updateBookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_timeUpdateBooking))
+                                .addGap(47, 47, 47)
+                                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_coachUpdateBooking)
+                                    .addComponent(cb_updateBookingCoach, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(panel_ofFrame_updateBookingFormLayout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(btn_updateBookingConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(250, Short.MAX_VALUE))
+        );
+        panel_ofFrame_updateBookingFormLayout.setVerticalGroup(
+            panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ofFrame_updateBookingFormLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(btn_clearSelectionBookingUpdate)
+                .addGap(32, 32, 32)
+                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_memberUpdateBooking)
+                    .addComponent(label_dateUpdateBooking)
+                    .addComponent(label_timeUpdateBooking)
+                    .addComponent(label_coachUpdateBooking))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_ofFrame_updateBookingFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_updateBookingMember, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_updateBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_updateBookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_updateBookingCoach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(152, 152, 152)
+                .addComponent(btn_updateBookingConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(675, Short.MAX_VALUE))
+        );
+
+        jframe_updateBooking.getContentPane().add(panel_ofFrame_updateBookingForm);
+        clearBookingInsertComboBoxes();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gym Manager");
         setMinimumSize(new java.awt.Dimension(1000, 1000));
         setName("MainFrame"); // NOI18N
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
+
+        main_tabbedPane.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                main_tabbedPaneComponentAdded(evt);
+            }
+        });
+        main_tabbedPane.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                main_tabbedPaneHierarchyChanged(evt);
+            }
+        });
+        main_tabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                main_tabbedPaneStateChanged(evt);
+            }
+        });
+
+        panel_membership.setMinimumSize(new java.awt.Dimension(800, 800));
+        panel_membership.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel_membershipMouseClicked(evt);
+            }
+        });
+
+        scrlpn_tableMembership.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        scrlpn_tableMembership.setPreferredSize(new java.awt.Dimension(473, 406));
+        scrlpn_tableMembership.setViewportView(jtable_member);
+
+        jtable_membership.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jtable_membership.setModel(new MembershipTable().loadTable()
+        );
+        jtable_membership.setMaximumSize(new java.awt.Dimension(1200, 1200));
+        jtable_membership.setMinimumSize(new java.awt.Dimension(1200, 1200));
+        jtable_membership.setPreferredSize(new java.awt.Dimension(1200, 1200));
+        jtable_membership.setDefaultEditor(Object.class,null);
+
+        setupMembershipTableListener();
+        jtable_membership.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtable_membershipMouseClicked(evt);
+            }
+        });
+        scrlpn_tableMembership.setViewportView(jtable_membership);
+
+        label_membershipTable.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_membershipTable.setText("Membership Table");
+
+        btn_membershipInsert.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_membershipInsert.setText("Insert");
+        btn_membershipInsert.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_membershipInsertMouseClicked(evt);
+            }
+        });
+        btn_membershipInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_membershipInsertActionPerformed(evt);
+            }
+        });
+
+        btn_membershipDelete.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_membershipDelete.setText("Delete");
+        btn_membershipDelete.setEnabled(false);
+        btn_membershipDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_membershipDeleteMouseClicked(evt);
+            }
+        });
+        btn_membershipDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_membershipDeleteActionPerformed(evt);
+            }
+        });
+
+        btn_updateMembership.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_updateMembership.setText("Update");
+        btn_updateMembership.setEnabled(false);
+        btn_updateMembership.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_updateMembershipMouseClicked(evt);
+            }
+        });
+        btn_updateMembership.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateMembershipActionPerformed(evt);
+            }
+        });
+
+        btn_resetFilterMembership.setText("Reset Filter");
+        btn_resetFilterMembership.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_resetFilterMembershipMouseClicked(evt);
+            }
+        });
+        btn_resetFilterMembership.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetFilterMembershipActionPerformed(evt);
+            }
+        });
+
+        btn_activeMemberships.setText("Filter Active Memberships");
+        btn_activeMemberships.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_activeMembershipsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_membershipLayout = new javax.swing.GroupLayout(panel_membership);
+        panel_membership.setLayout(panel_membershipLayout);
+        panel_membershipLayout.setHorizontalGroup(
+            panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_membershipLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_membershipDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(btn_membershipInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_updateMembership, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_membershipLayout.createSequentialGroup()
+                        .addGap(301, 301, 301)
+                        .addComponent(btn_activeMemberships)
+                        .addGap(35, 35, 35)
+                        .addComponent(btn_resetFilterMembership)
+                        .addGap(0, 318, Short.MAX_VALUE))
+                    .addGroup(panel_membershipLayout.createSequentialGroup()
+                        .addGap(381, 381, 381)
+                        .addComponent(label_membershipTable)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_membershipLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scrlpn_tableMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
+        );
+        panel_membershipLayout.setVerticalGroup(
+            panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_membershipLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_resetFilterMembership)
+                    .addComponent(btn_activeMemberships))
+                .addGroup(panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_membershipLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(btn_membershipInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_membershipLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_membershipTable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panel_membershipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_membershipLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btn_membershipDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btn_updateMembership, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_membershipLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrlpn_tableMembership, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(243, Short.MAX_VALUE))
+        );
+
+        main_tabbedPane.addTab("Membership", panel_membership);
+        main_tabbedPane.revalidate();
+        main_tabbedPane.repaint();
+
+        panel_booking.setMinimumSize(new java.awt.Dimension(800, 800));
+        panel_booking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel_bookingMouseClicked(evt);
+            }
+        });
+
+        scrlpn_tableBooking.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        scrlpn_tableBooking.setViewportView(jtable_member);
+
+        jtable_booking.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jtable_booking.setModel(new BookingTable().loadTable()
+        );
+        jtable_booking.setMaximumSize(new java.awt.Dimension(1200, 1200));
+        jtable_booking.setMinimumSize(new java.awt.Dimension(1200, 1200));
+        jtable_booking.setPreferredSize(new java.awt.Dimension(1200, 1200));
+        jtable_booking.setDefaultEditor(Object.class,null);
+
+        setupBookingTableListener();
+        jtable_booking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtable_bookingMouseClicked(evt);
+            }
+        });
+        scrlpn_tableBooking.setViewportView(jtable_booking);
+
+        label_bookingTable.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label_bookingTable.setText("Booking Table");
+
+        btn_bookingInsert.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_bookingInsert.setText("Insert");
+        btn_bookingInsert.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_bookingInsertMouseClicked(evt);
+            }
+        });
+        btn_bookingInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_bookingInsertActionPerformed(evt);
+            }
+        });
+
+        btn_bookingDelete.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_bookingDelete.setText("Delete");
+        btn_bookingDelete.setEnabled(false);
+        btn_bookingDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_bookingDeleteMouseClicked(evt);
+            }
+        });
+        btn_bookingDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_bookingDeleteActionPerformed(evt);
+            }
+        });
+
+        btn_updateBooking.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btn_updateBooking.setText("Update");
+        btn_updateBooking.setEnabled(false);
+        btn_updateBooking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_updateBookingMouseClicked(evt);
+            }
+        });
+        btn_updateBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateBookingActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_bookingLayout = new javax.swing.GroupLayout(panel_booking);
+        panel_booking.setLayout(panel_bookingLayout);
+        panel_bookingLayout.setHorizontalGroup(
+            panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_bookingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_bookingDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(btn_bookingInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_updateBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGroup(panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bookingLayout.createSequentialGroup()
+                        .addComponent(scrlpn_tableBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bookingLayout.createSequentialGroup()
+                        .addComponent(label_bookingTable)
+                        .addGap(394, 394, 394))))
+        );
+        panel_bookingLayout.setVerticalGroup(
+            panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_bookingLayout.createSequentialGroup()
+                .addGroup(panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_bookingLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(btn_bookingInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bookingLayout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(label_bookingTable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panel_bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_bookingLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btn_bookingDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btn_updateBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_bookingLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrlpn_tableBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(489, Short.MAX_VALUE))
+        );
+
+        main_tabbedPane.addTab("Booking", panel_booking);
+        main_tabbedPane.revalidate();
+        main_tabbedPane.repaint();
 
         panel_member.setMinimumSize(new java.awt.Dimension(800, 800));
         panel_member.setPreferredSize(new java.awt.Dimension(800, 800));
@@ -323,14 +1108,16 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         scrlpn_tableMember.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        scrlpn_tableMember.setNextFocusableComponent(jtable_member);
+        scrlpn_tableMember.setMinimumSize(new java.awt.Dimension(1000, 1000));
         scrlpn_tableMember.setViewportView(jtable_member);
 
         jtable_member.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jtable_member.setModel(new MemberTable().loadTable()
-        );
+        jtable_member.setModel(new MemberTable().loadTable());
+        jtable_member.setMaximumSize(new java.awt.Dimension(700, 700));
+        jtable_member.setMinimumSize(new java.awt.Dimension(700, 700));
+        jtable_member.setPreferredSize(new java.awt.Dimension(700, 700));
         jtable_member.setDefaultEditor(Object.class,null);
-        setupTableListener();
+        setupMemberTableListener();
         jtable_member.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtable_memberMouseClicked(evt);
@@ -431,29 +1218,29 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btn_updateMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_memberLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_memberLayout.createSequentialGroup()
-                                .addComponent(label_membersTable)
-                                .addGap(221, 221, 221))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_memberLayout.createSequentialGroup()
-                                .addComponent(scrlpn_tableMember, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80))))
-                    .addGroup(panel_memberLayout.createSequentialGroup()
                         .addGap(203, 203, 203)
                         .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_filterFirstNameMemberTable, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_firstNameFiltermembertbl))
                         .addGap(18, 18, 18)
                         .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_lastNameFiltermembertbl)
                             .addGroup(panel_memberLayout.createSequentialGroup()
                                 .addComponent(txt_filterLastNameMemberTable, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
                                 .addComponent(btn_confirmFilterMembertbl)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_resetFilterMember))
-                            .addComponent(label_lastNameFiltermembertbl))
-                        .addGap(0, 335, Short.MAX_VALUE))))
+                                .addComponent(btn_resetFilterMember)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panel_memberLayout.createSequentialGroup()
+                        .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_memberLayout.createSequentialGroup()
+                                .addGap(318, 318, 318)
+                                .addComponent(label_membersTable))
+                            .addGroup(panel_memberLayout.createSequentialGroup()
+                                .addGap(135, 135, 135)
+                                .addComponent(scrlpn_tableMember, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(255, Short.MAX_VALUE))))
         );
         panel_memberLayout.setVerticalGroup(
             panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,79 +1255,99 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btn_resetFilterMember)
                     .addComponent(txt_filterFirstNameMemberTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_confirmFilterMembertbl))
-                .addGap(29, 29, 29)
-                .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_membersTable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_memberInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_memberLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(btn_memberInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_memberLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrlpn_tableMember, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(label_membersTable)))
+                .addGroup(panel_memberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_memberLayout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(btn_memberDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(btn_updateMember, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(244, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_updateMember, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_memberLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(scrlpn_tableMember, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Member", panel_member);
-
-        javax.swing.GroupLayout panel_gymLayout = new javax.swing.GroupLayout(panel_gym);
-        panel_gym.setLayout(panel_gymLayout);
-        panel_gymLayout.setHorizontalGroup(
-            panel_gymLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 995, Short.MAX_VALUE)
-        );
-        panel_gymLayout.setVerticalGroup(
-            panel_gymLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Gym", panel_gym);
+        main_tabbedPane.addTab("Member", panel_member);
+        main_tabbedPane.revalidate();
+        main_tabbedPane.repaint();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(main_tabbedPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(main_tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 433, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   private void clearInsertFormTextFields(){
-       txt_insert_memberID.setText("");
-       txt_insert_memberFname.setText("");
-       txt_insert_memberLname.setText("");
-       txt_insert_memberPhone.setText("");
-   }
-   
-   private void fillUpdateFieldsWithOldData(){
-       int selectedRow = jtable_member.getSelectedRow();
-       if(selectedRow == -1)
+
+    private void clearMemberInsertFormTextFields() {
+        txt_insert_memberID.setText("");
+        txt_insert_memberFname.setText("");
+        txt_insert_memberLname.setText("");
+        txt_insert_memberPhone.setText("");
+    }
+
+    private void clearMembershipInsertFormFields() {
+        cb_memberIdInsertMembership.setSelectedItem(null);
+        cb_gymBranchInsertMembership.setSelectedItem(null);
+        datechooser_endDateInsertMembership.setDate(null);
+        datechooser_startDateInsertMembership.setDate(null);
+    }
+
+    private void fillMembershipUpdateFieldsWithOldData() {
+        int selectedRow = jtable_membership.getSelectedRow();
+        if (selectedRow == -1) {
             return;
-       
-       Integer ID = (Integer)jtable_member.getValueAt(selectedRow,0);
-       String fname = (String)jtable_member.getValueAt(selectedRow,1);
-       String lname = (String)jtable_member.getValueAt(selectedRow,2);
-       String phone = (String)jtable_member.getValueAt(selectedRow,3);
-       
-       txt_update_memberID.setText(String.valueOf(ID));
-       txt_update_memberFname.setText(fname);
-       txt_update_memberLname.setText(lname);
-       txt_update_memberPhone.setText(phone);
-   }
+        }
+
+        Integer oldMemberID = (Integer) jtable_membership.getValueAt(selectedRow, 0);
+        String cbxID = String.valueOf(oldMemberID) + ":" + (String) jtable_membership.getValueAt(selectedRow, 1);
+
+        Integer oldBno = (Integer) jtable_membership.getValueAt(selectedRow, 2);
+        String cbxBno = String.valueOf(oldBno) + ":" + (String) jtable_membership.getValueAt(selectedRow, 3);
+
+        cb_memberIdUpdateMembership.setSelectedItem(cbxID);
+        cb_gymBranchUpdateMembership.setSelectedItem(cbxBno);
+        datechooser_startDateUpdateMembership.setDate((java.sql.Date) jtable_membership.getValueAt(selectedRow, 4));
+        datechooser_endDateUpdateMembership.setDate((java.sql.Date) jtable_membership.getValueAt(selectedRow, 5));
+
+    }
+
+    private void fillMemberUpdateFieldsWithOldData() {
+        int selectedRow = jtable_member.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Integer ID = (Integer) jtable_member.getValueAt(selectedRow, 0);
+        String fname = (String) jtable_member.getValueAt(selectedRow, 1);
+        String lname = (String) jtable_member.getValueAt(selectedRow, 2);
+        String phone = (String) jtable_member.getValueAt(selectedRow, 3);
+
+        txt_update_memberID.setText(String.valueOf(ID));
+        txt_update_memberFname.setText(fname);
+        txt_update_memberLname.setText(lname);
+        txt_update_memberPhone.setText(phone);
+    }
     private void btn_memberInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_memberInsertActionPerformed
-        clearInsertFormTextFields();
+        clearMemberInsertFormTextFields();
         jframe_insertMember.setVisible(true);
     }//GEN-LAST:event_btn_memberInsertActionPerformed
-    
+
     private void btn_memberInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_memberInsertMouseClicked
 
     }//GEN-LAST:event_btn_memberInsertMouseClicked
@@ -576,68 +1383,67 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         String fname = txt_insert_memberFname.getText();
-        if(fname.isEmpty())
-                fname = null;
+        if (fname.isEmpty()) {
+            fname = null;
+        }
         String lname = txt_insert_memberLname.getText();
-        if(lname.isEmpty())
-                lname = null;
+        if (lname.isEmpty()) {
+            lname = null;
+        }
         String phone = txt_insert_memberPhone.getText();
-        if(phone.isEmpty())
-                phone = null;
+        if (phone.isEmpty()) {
+            phone = null;
+        }
         Member insertedMember = new Member(memberID, fname, lname, phone);
 
         try {
             int result = new MemberTable().insert(insertedMember);
-            if(result == 1){
-                    DatabaseOperation.showSuccessMessage(panel_ofFrame_insertMemberForm, "Insertion Successful.");
-                    jtable_member.setModel(new MemberTable().loadTable());
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_insertMemberForm, "Insertion Successful.");
+                jtable_member.setModel(new MemberTable().loadTable());
+            } else {
+                DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm, "Insertion failed.");
             }
-            else 
-                DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm,"Insertion failed.");
-                
-        }catch(java.sql.SQLException e){
-            DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm,e.getMessage());
+
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm, e.getMessage());
         }
-        
-       jframe_insertMember.dispose();
+
+        jframe_insertMember.dispose();
     }//GEN-LAST:event_btn_insertMemberConfirmMouseClicked
 
     private void btn_memberDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_memberDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_memberDeleteActionPerformed
 
-    private void jtable_memberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_memberMouseClicked
-   
-   
-    }//GEN-LAST:event_jtable_memberMouseClicked
-
     private void panel_memberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_memberMouseClicked
         jtable_member.clearSelection();
         panel_member.requestFocusInWindow();
     }//GEN-LAST:event_panel_memberMouseClicked
-    
+
     private void btn_memberDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_memberDeleteMouseClicked
-        if(!btn_memberDelete.isEnabled())
-               return;
-        int selectedRow = jtable_member.getSelectedRow();
-       if(selectedRow == -1)
+        if (!btn_memberDelete.isEnabled()) {
             return;
-       
-       Integer memberID = (Integer)jtable_member.getValueAt(selectedRow, 0);
-       
-       try{
-           int result = new MemberTable().delete(new Member(memberID));
-           if(result == 1){
-                DatabaseOperation.showSuccessMessage(panel_member,"Member deleted successfully.");
+        }
+        int selectedRow = jtable_member.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Integer memberID = (Integer) jtable_member.getValueAt(selectedRow, 0);
+
+        try {
+            int result = new MemberTable().delete(new Member(memberID));
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_member, "Member deleted successfully.");
                 jtable_member.setModel(new MemberTable().loadTable());
-                
-           }
-           else
-               DatabaseOperation.showErrorMessage(panel_member,"Delete failed.");
-       }
-       catch(java.sql.SQLException e){
-           DatabaseOperation.showErrorMessage(panel_member,e.getMessage());
-       }
+
+            } else {
+                DatabaseOperation.showErrorMessage(panel_member, "Delete failed.");
+            }
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_member, e.getMessage());
+        }
     }//GEN-LAST:event_btn_memberDeleteMouseClicked
 
     private void btn_updateMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateMemberActionPerformed
@@ -661,9 +1467,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_update_memberIDActionPerformed
 
     private void btn_updateMemberConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateMemberConfirmMouseClicked
-        if(jtable_member.getSelectedRow() == -1)
-                return;
-        Member oldData = new Member((Integer)jtable_member.getValueAt(jtable_member.getSelectedRow(),0));
+        if (jtable_member.getSelectedRow() == -1) {
+            return;
+        }
+        Member oldData = new Member((Integer) jtable_member.getValueAt(jtable_member.getSelectedRow(), 0));
         Integer memberID = null;
         try {
             memberID = Integer.parseInt(txt_update_memberID.getText());
@@ -674,31 +1481,34 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         String fname = txt_update_memberFname.getText();
-        if(fname.isEmpty())
-                fname = null;
+        if (fname.isEmpty()) {
+            fname = null;
+        }
         String lname = txt_update_memberLname.getText();
-        if(lname.isEmpty())
-                lname = null;
+        if (lname.isEmpty()) {
+            lname = null;
+        }
         String phone = txt_update_memberPhone.getText();
-        if(phone.isEmpty())
-                phone = null;
+        if (phone.isEmpty()) {
+            phone = null;
+        }
         Member newData = new Member(memberID, fname, lname, phone);
 
         try {
-            int result = new MemberTable().update(oldData,newData);
-            if(result == 1){
-                    DatabaseOperation.showSuccessMessage(panel_ofFrame_insertMemberForm, "Update successful.");
-                    jtable_member.setModel(new MemberTable().loadTable());
+            int result = new MemberTable().update(oldData, newData);
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_insertMemberForm, "Update successful.");
+                jtable_member.setModel(new MemberTable().loadTable());
+            } else {
+                DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm, "Update failed.");
             }
-            else 
-                DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm,"Update failed.");
-                
-        }catch(java.sql.SQLException e){
-            DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm,e.getMessage());
+
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_ofFrame_insertMemberForm, e.getMessage());
         }
-        
-       jframe_updateMember.dispose();
-        
+
+        jframe_updateMember.dispose();
+
     }//GEN-LAST:event_btn_updateMemberConfirmMouseClicked
 
     private void btn_updateMemberConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateMemberConfirmActionPerformed
@@ -706,19 +1516,21 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_updateMemberConfirmActionPerformed
 
     private void btn_updateMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateMemberMouseClicked
-       if(!btn_updateMember.isEnabled())
+        if (!btn_updateMember.isEnabled()) {
             return;
-       if(jtable_member.getSelectedRow() == -1)
+        }
+        if (jtable_member.getSelectedRow() == -1) {
             return;
-       
-       fillUpdateFieldsWithOldData();
-       jframe_updateMember.setVisible(true);
+        }
+
+        fillMemberUpdateFieldsWithOldData();
+        jframe_updateMember.setVisible(true);
     }//GEN-LAST:event_btn_updateMemberMouseClicked
 
     private void btn_resetFilterMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_resetFilterMemberMouseClicked
-       jtable_member.setModel(new MemberTable().loadTable());
-       txt_filterFirstNameMemberTable.setText("");
-       txt_filterLastNameMemberTable.setText("");
+        jtable_member.setModel(new MemberTable().loadTable());
+        txt_filterFirstNameMemberTable.setText("");
+        txt_filterLastNameMemberTable.setText("");
     }//GEN-LAST:event_btn_resetFilterMemberMouseClicked
 
     private void txt_filterLastNameMemberTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_filterLastNameMemberTableActionPerformed
@@ -736,94 +1548,650 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_confirmFilterMembertblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_confirmFilterMembertblMouseClicked
         String fname = txt_filterFirstNameMemberTable.getText();
         String lname = txt_filterLastNameMemberTable.getText();
-        
-        jtable_member.setModel(new MemberTable().selectByMemberName(new Member(null,fname,lname,null)));
-        
-    }//GEN-LAST:event_btn_confirmFilterMembertblMouseClicked
-    public void setupTableListener() {
-    // Get the selection model of the table
-    ListSelectionModel selectionModel = jtable_member.getSelectionModel();
 
-    // Add the listener to the selection model
-    selectionModel.addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            // Check if a row is selected
-            if (jtable_member.getSelectedRow() != -1) {
-                // Enable the delete button if a row is selected
-                btn_memberDelete.setEnabled(true);
-                btn_updateMember.setEnabled(true);
-            } else {
-                // Disable the delete button if no row is selected
-                btn_memberDelete.setEnabled(false);
-                btn_updateMember.setEnabled(false);
-            }
+        jtable_member.setModel(new MemberTable().selectByMemberName(new Member(null, fname, lname, null)));
+
+    }//GEN-LAST:event_btn_confirmFilterMembertblMouseClicked
+
+    private void jtable_membershipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_membershipMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtable_membershipMouseClicked
+
+    private void btn_membershipDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_membershipDeleteMouseClicked
+        if (!btn_membershipDelete.isEnabled()) {
+            return;
         }
-    });
-}
+        int selectedRow = jtable_membership.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Integer memberID = (Integer) jtable_membership.getValueAt(selectedRow, 0);
+        Integer Bno = (Integer) jtable_membership.getValueAt(selectedRow, 2);
+        java.sql.Date startDate = (java.sql.Date) jtable_membership.getValueAt(selectedRow, 4);
+
+        try {
+            int result = new MembershipTable().delete(new Membership(memberID, Bno, startDate));
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_membership, "Membership deleted successfully.");
+                jtable_membership.setModel(new MembershipTable().loadTable());
+
+            } else {
+                DatabaseOperation.showErrorMessage(panel_membership, "Delete failed.");
+            }
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_membership, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_membershipDeleteMouseClicked
+
+    private void btn_membershipDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_membershipDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_membershipDeleteActionPerformed
+
+    private void btn_updateMembershipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateMembershipMouseClicked
+        if (!btn_updateMembership.isEnabled()) {
+            return;
+        }
+
+        fillMembershipUpdateFieldsWithOldData();
+        jframe_updateMembership.setVisible(true);
+
+    }//GEN-LAST:event_btn_updateMembershipMouseClicked
+
+    private void btn_updateMembershipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateMembershipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_updateMembershipActionPerformed
+
+    private void btn_resetFilterMembershipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_resetFilterMembershipMouseClicked
+        jtable_membership.setModel(new MembershipTable().loadTable());
+    }//GEN-LAST:event_btn_resetFilterMembershipMouseClicked
+
+    private void btn_resetFilterMembershipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetFilterMembershipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_resetFilterMembershipActionPerformed
+
+    private void panel_membershipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_membershipMouseClicked
+        jtable_membership.clearSelection();
+    }//GEN-LAST:event_panel_membershipMouseClicked
+
+    private void btn_membershipInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_membershipInsertActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_membershipInsertActionPerformed
+
+    private void btn_membershipInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_membershipInsertMouseClicked
+        clearMembershipInsertFormFields();
+        jframe_insertMembership.setVisible(true);
+    }//GEN-LAST:event_btn_membershipInsertMouseClicked
+
+    private void btn_activeMembershipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_activeMembershipsActionPerformed
+        jtable_membership.setModel(new MembershipTable().loadTableActiveMemberhips());
+    }//GEN-LAST:event_btn_activeMembershipsActionPerformed
+
+    private void jtable_memberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_memberMouseClicked
+
+    }//GEN-LAST:event_jtable_memberMouseClicked
+
+    private void main_tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_main_tabbedPaneStateChanged
+
+    }//GEN-LAST:event_main_tabbedPaneStateChanged
+
+    private void main_tabbedPaneComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_main_tabbedPaneComponentAdded
+        main_tabbedPane.revalidate();
+        main_tabbedPane.repaint();
+    }//GEN-LAST:event_main_tabbedPaneComponentAdded
+
+    private void main_tabbedPaneHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_main_tabbedPaneHierarchyChanged
+        main_tabbedPane.revalidate();
+        main_tabbedPane.repaint();
+    }//GEN-LAST:event_main_tabbedPaneHierarchyChanged
+
+    private void btn_insertMembershipConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertMembershipConfirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_insertMembershipConfirmActionPerformed
+
+    private void btn_insertMembershipConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_insertMembershipConfirmMouseClicked
+
+        Integer memberId = null;
+        String str_mId = (String) cb_memberIdInsertMembership.getSelectedItem();
+        if (str_mId != null) {
+            str_mId = str_mId.substring(0, str_mId.indexOf(":"));
+            memberId = Integer.parseInt(str_mId);
+        }
+
+        Integer bno = null;
+        String str_bno = (String) cb_gymBranchInsertMembership.getSelectedItem();
+        if (str_bno != null) {
+            str_bno = str_bno.substring(0, str_bno.indexOf(":"));
+            bno = Integer.parseInt(str_bno);
+        }
+
+        java.sql.Date startDate = null;
+        if (datechooser_startDateInsertMembership.getDate() != null) {
+            startDate = new java.sql.Date(datechooser_startDateInsertMembership.getDate().getTime());
+        }
+
+        java.sql.Date endDate = null;
+        if (datechooser_endDateInsertMembership.getDate() != null) {
+            endDate = new java.sql.Date(datechooser_endDateInsertMembership.getDate().getTime());
+        }
+
+        try {
+            int result = new MembershipTable().insert(new Membership(memberId, bno, startDate, endDate));
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_insertMembershipForm, "Insertion successful.");
+                jtable_membership.setModel(new MembershipTable().loadTable());
+            } else {
+                DatabaseOperation.showErrorMessage(panel_ofFrame_insertMembershipForm, "Insertion failed.");
+            }
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_ofFrame_insertMembershipForm, e.getMessage());
+        }
+        jframe_insertMembership.dispose();
+    }//GEN-LAST:event_btn_insertMembershipConfirmMouseClicked
+
+    private void btn_updateMembershipConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateMembershipConfirmMouseClicked
+
+        int selectedRow = jtable_membership.getSelectedRow();
+
+        Integer oldMemberID = (Integer) jtable_membership.getValueAt(selectedRow, 0);
+
+        Integer oldBno = (Integer) jtable_membership.getValueAt(selectedRow, 2);
+
+        Integer memberId = null;
+        String str_mId = (String) cb_memberIdUpdateMembership.getSelectedItem();
+        if (str_mId != null) {
+            str_mId = str_mId.substring(0, str_mId.indexOf(":"));
+            memberId = Integer.parseInt(str_mId);
+        }
+
+        Integer bno = null;
+        String str_bno = (String) cb_gymBranchUpdateMembership.getSelectedItem();
+        if (str_bno != null) {
+            str_bno = str_bno.substring(0, str_bno.indexOf(":"));
+            bno = Integer.parseInt(str_bno);
+        }
+
+        java.sql.Date newStartDate = null;
+        if (datechooser_startDateUpdateMembership.getDate() != null) {
+            newStartDate = new java.sql.Date(datechooser_startDateUpdateMembership.getDate().getTime());
+        }
+
+        java.sql.Date newEndDate = null;
+        if (datechooser_endDateUpdateMembership.getDate() != null) {
+            newEndDate = new java.sql.Date(datechooser_endDateUpdateMembership.getDate().getTime());
+        }
+
+        try {
+            Membership oldShip = new Membership(oldMemberID, oldBno, null, null);
+            Membership newShip = new Membership(memberId, bno, newStartDate, newEndDate);
+
+            int result = new MembershipTable().update(oldShip, newShip);
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_updateMembershipForm, "Update successful.");
+                jtable_membership.setModel(new MembershipTable().loadTable());
+            } else {
+                DatabaseOperation.showErrorMessage(panel_ofFrame_updateMembershipForm, "Update failed.");
+            }
+        } catch (java.sql.SQLException e) {
+            DatabaseOperation.showErrorMessage(panel_ofFrame_updateMembershipForm, e.getMessage());
+        }
+        jframe_updateMembership.dispose();
+
+
+    }//GEN-LAST:event_btn_updateMembershipConfirmMouseClicked
+
+    private void btn_updateMembershipConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateMembershipConfirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_updateMembershipConfirmActionPerformed
+
+    private void cb_memberIdUpdateMembershipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_memberIdUpdateMembershipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_memberIdUpdateMembershipActionPerformed
+
+    private void jtable_bookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_bookingMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtable_bookingMouseClicked
+
+    private void btn_bookingInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bookingInsertMouseClicked
+        clearBookingInsertComboBoxes();
+        jframe_insertBooking.setVisible(true);
+        cb_insertBookingDate.setEnabled(false);
+        cb_insertBookingTime.setEnabled(false);
+        cb_insertBookingCoach.setEnabled(false);
+    }//GEN-LAST:event_btn_bookingInsertMouseClicked
+
+    private void btn_bookingInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bookingInsertActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_bookingInsertActionPerformed
+
+    private void btn_bookingDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bookingDeleteMouseClicked
+        if (!btn_bookingDelete.isEnabled()) {
+            return;
+        }
+        int selectedRow = jtable_booking.getSelectedRow();
+        Integer mId = (Integer) jtable_booking.getValueAt(selectedRow, 0);
+        Integer cId = (Integer) jtable_booking.getValueAt(selectedRow, 2);
+        java.sql.Date date = (java.sql.Date) jtable_booking.getValueAt(selectedRow, 4);
+        java.sql.Time time = (java.sql.Time) jtable_booking.getValueAt(selectedRow, 5);
+
+        try {
+            int result = new BookingTable().delete(new Booking(mId, cId, date, time));
+
+            if (result == 1) {
+                DatabaseOperation.showSuccessMessage(panel_booking, "Booking deleted successfully.");
+                jtable_booking.setModel(new BookingTable().loadTable());
+            } else {
+                DatabaseOperation.showErrorMessage(panel_booking, "Delete failed.");
+            }
+        } catch (java.sql.SQLException e) {
+
+            DatabaseOperation.showErrorMessage(panel_booking, e.getMessage());
+
+        }
+    }//GEN-LAST:event_btn_bookingDeleteMouseClicked
+
+    private void btn_bookingDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bookingDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_bookingDeleteActionPerformed
+
+    private void btn_updateBookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateBookingMouseClicked
+        if(!btn_updateBooking.isEnabled()) 
+            return;
+        clearBookingUpdateComboBoxes();
+        int selectedRow = jtable_booking.getSelectedRow();
+        Integer mid = (Integer)jtable_booking.getValueAt(selectedRow, 0);
+        String name = (String)jtable_booking.getValueAt(selectedRow, 1);
+        
+        String cbxMember = String.valueOf(mid) + ":" + name;
+        cb_updateBookingMember.setSelectedItem(cbxMember);
+        
+        jframe_updateBooking.setVisible(true);
+        
+    }//GEN-LAST:event_btn_updateBookingMouseClicked
+
+    private void btn_updateBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateBookingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_updateBookingActionPerformed
+
+    private void panel_bookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_bookingMouseClicked
+        jtable_booking.clearSelection();        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_bookingMouseClicked
+
+    private void btn_clearSelectionBookingInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearSelectionBookingInsertMouseClicked
+        clearBookingInsertComboBoxes();
+        
+        cb_insertBookingDate.setEnabled(false);
+        cb_insertBookingTime.setEnabled(false);
+        cb_insertBookingCoach.setEnabled(false);
+    }//GEN-LAST:event_btn_clearSelectionBookingInsertMouseClicked
+
+    private void cb_insertBookingMemberItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_insertBookingMemberItemStateChanged
+        
+        if(cb_insertBookingMember.getSelectedItem() == null){
+            cb_insertBookingDate.setEnabled(false);
+            return;
+        }
+        ArrayList<String> dates = (ArrayList<String>)new BookingTable().getDatesRelevantTo(null, getIdFromComboBox(cb_insertBookingMember), null);
+        cb_insertBookingDate.setModel(new DefaultComboBoxModel<String>(dates.toArray(new String[0])));
+        if(dates.size() == 1)
+            cb_insertBookingDate.setSelectedItem(null);
+        
+        cb_insertBookingDate.setEnabled(true);
+    }//GEN-LAST:event_cb_insertBookingMemberItemStateChanged
+
+    private void cb_insertBookingCoachItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_insertBookingCoachItemStateChanged
+        
+    }//GEN-LAST:event_cb_insertBookingCoachItemStateChanged
+
+    private void cb_insertBookingDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_insertBookingDateItemStateChanged
+        
+        ArrayList<String> times = (ArrayList<String>)new BookingTable().getTimesRelevantTo(null, getIdFromComboBox(cb_insertBookingMember), getDateFromComboBox(cb_insertBookingDate));
+        cb_insertBookingTime.setModel(new DefaultComboBoxModel<String>(times.toArray(new String[0])));
+        if(times.size() == 1)
+            cb_insertBookingTime.setSelectedItem(null);
+        cb_insertBookingTime.setEnabled(true);
+    }//GEN-LAST:event_cb_insertBookingDateItemStateChanged
+
+    private void cb_insertBookingTimeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_insertBookingTimeItemStateChanged
+        ArrayList<String> coaches = (ArrayList<String>)new BookingTable().getCoachesRelevantTo(getIdFromComboBox(cb_insertBookingMember), getDateFromComboBox(cb_insertBookingDate),getTimeFromComboBox(cb_insertBookingTime));
+        cb_insertBookingCoach.setModel(new DefaultComboBoxModel<String>(coaches.toArray(new String[0])));
+        if(coaches.size() == 1)
+                cb_insertBookingCoach.setSelectedItem(null);
+        cb_insertBookingCoach.setEnabled(true);
+    }//GEN-LAST:event_cb_insertBookingTimeItemStateChanged
+
+    private void btn_confirmInsertBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmInsertBookingActionPerformed
+        Integer mid = getIdFromComboBox(cb_insertBookingMember);
+        Integer cid = getIdFromComboBox(cb_insertBookingCoach);
+        java.sql.Date date = getDateFromComboBox(cb_insertBookingDate);
+        java.sql.Time time = getTimeFromComboBox(cb_insertBookingTime);
+        
+        
+        try{
+            int result = new BookingTable().insert(new Booking(mid,cid,date,time));
+            if(result == 1){
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_insertBookingForm, "Insertion successful.");
+                jtable_booking.setModel(new BookingTable().loadTable());
+            }
+            else
+                DatabaseOperation.showErrorMessage(panel_ofFrame_insertBookingForm, "Insertion failed.");
+        }catch(java.sql.SQLException e){
+             DatabaseOperation.showErrorMessage(panel_ofFrame_insertBookingForm,e.getMessage());
+        }
+        jframe_insertBooking.dispose();
+    }//GEN-LAST:event_btn_confirmInsertBookingActionPerformed
+
+    private void cb_updateBookingMemberItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_updateBookingMemberItemStateChanged
+        if(cb_updateBookingMember.getSelectedItem() == null){
+            cb_updateBookingDate.setEnabled(false);
+            return;
+        }
+        ArrayList<String> dates = (ArrayList<String>)new BookingTable().getDatesRelevantTo(null, getIdFromComboBox(cb_updateBookingMember), null);
+        cb_updateBookingDate.setModel(new DefaultComboBoxModel<String>(dates.toArray(new String[0])));
+       
+           cb_updateBookingDate.setSelectedItem(null);
+        
+        cb_updateBookingDate.setEnabled(true);
+        cb_updateBookingTime.setEnabled(false);
+    }//GEN-LAST:event_cb_updateBookingMemberItemStateChanged
+
+    private void cb_updateBookingCoachItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_updateBookingCoachItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_updateBookingCoachItemStateChanged
+
+    private void cb_updateBookingDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_updateBookingDateItemStateChanged
+        ArrayList<String> times = (ArrayList<String>)new BookingTable().getTimesRelevantTo(null, getIdFromComboBox(cb_updateBookingMember), getDateFromComboBox(cb_updateBookingDate));
+        cb_updateBookingTime.setModel(new DefaultComboBoxModel<String>(times.toArray(new String[0])));
+        
+        cb_updateBookingTime.setSelectedItem(null);
+        cb_updateBookingTime.setEnabled(true);
+        cb_updateBookingCoach.setEnabled(false);
+    }//GEN-LAST:event_cb_updateBookingDateItemStateChanged
+
+    private void cb_updateBookingTimeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_updateBookingTimeItemStateChanged
+        ArrayList<String> coaches = (ArrayList<String>)new BookingTable().getCoachesRelevantTo(getIdFromComboBox(cb_updateBookingMember), getDateFromComboBox(cb_updateBookingDate),getTimeFromComboBox(cb_updateBookingTime));
+        cb_updateBookingCoach.setModel(new DefaultComboBoxModel<String>(coaches.toArray(new String[0])));
+        
+        cb_updateBookingCoach.setSelectedItem(null);
+        cb_updateBookingCoach.setEnabled(true);
+        
+    }//GEN-LAST:event_cb_updateBookingTimeItemStateChanged
+    
+    private void clearBookingUpdateComboBoxes(){
+        
+        cb_updateBookingMember.setSelectedItem(null);
+        cb_updateBookingDate.setSelectedItem(null);
+        cb_updateBookingTime.setSelectedItem(null);
+        cb_updateBookingCoach.setSelectedItem(null);
+    }
+    private void btn_clearSelectionBookingUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearSelectionBookingUpdateMouseClicked
+        clearBookingUpdateComboBoxes();
+        cb_updateBookingDate.setEnabled(false);
+        cb_updateBookingTime.setEnabled(false);
+        cb_updateBookingCoach.setEnabled(false);
+    }//GEN-LAST:event_btn_clearSelectionBookingUpdateMouseClicked
+
+    private void btn_updateBookingConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateBookingConfirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_updateBookingConfirmActionPerformed
+
+    private void btn_updateBookingConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateBookingConfirmMouseClicked
+        
+        int row = jtable_booking.getSelectedRow();
+        Integer oldMid = (Integer)jtable_booking.getValueAt(row,0);
+        Integer oldCid = (Integer)jtable_booking.getValueAt(row,2);
+        java.sql.Date oldDate = (java.sql.Date)jtable_booking.getValueAt(row,4);
+        java.sql.Time oldTime = (java.sql.Time)jtable_booking.getValueAt(row,5);
+        
+        Integer mid = getIdFromComboBox(cb_updateBookingMember);
+        Integer cid = getIdFromComboBox(cb_updateBookingCoach);
+        java.sql.Date date = getDateFromComboBox(cb_updateBookingDate);
+        java.sql.Time time = getTimeFromComboBox(cb_updateBookingTime);
+        
+        
+        try{
+            Booking old = new Booking(oldMid,oldCid,oldDate,oldTime);
+            int result = new BookingTable().update(old,new Booking(mid,cid,date,time));
+            if(result == 1){
+                DatabaseOperation.showSuccessMessage(panel_ofFrame_updateBookingForm, "Update successful.");
+                jtable_booking.setModel(new BookingTable().loadTable());
+            }
+            else
+                DatabaseOperation.showErrorMessage(panel_ofFrame_updateBookingForm, "Update failed.");
+        }catch(java.sql.SQLException e){
+             DatabaseOperation.showErrorMessage(panel_ofFrame_updateBookingForm,e.getMessage());
+        }
+        jframe_updateBooking.dispose();
+    }//GEN-LAST:event_btn_updateBookingConfirmMouseClicked
+
+    public void setupBookingTableListener() {
+        ListSelectionModel selectionModel = jtable_booking.getSelectionModel();
+
+        // Add the listener to the selection model
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Check if a row is selected
+                if (jtable_booking.getSelectedRow() != -1) {
+                    // Enable the delete button if a row is selected
+                    btn_bookingDelete.setEnabled(true);
+                    btn_updateBooking.setEnabled(true);
+                } else {
+                    // Disable the delete button if no row is selected
+                    btn_bookingDelete.setEnabled(false);
+                    btn_updateBooking.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    public Integer getIdFromComboBox(JComboBox cb) {
+        Integer result = null;
+        String strId = (String) cb.getSelectedItem();
+        if (strId == null) {
+            return result;
+        }
+
+        strId = strId.substring(0, strId.indexOf(":"));
+
+        result = Integer.parseInt(strId);
+        return result;
+    }
+
+    public java.sql.Date getDateFromComboBox(JComboBox cb) {
+        String selectedDate = (String) cb.getSelectedItem();
+        if (selectedDate == null) {
+            return null;
+        }
+        return java.sql.Date.valueOf((String) cb.getSelectedItem());
+
+    }
+
+    public java.sql.Time getTimeFromComboBox(JComboBox cb) {
+        String selectedTime = (String) cb.getSelectedItem();
+        if (selectedTime == null) {
+            return null;
+        }
+        return java.sql.Time.valueOf((String) cb.getSelectedItem());
+    }
+
+    public void setupMemberTableListener() {
+        // Get the selection model of the table
+        ListSelectionModel selectionModel = jtable_member.getSelectionModel();
+
+        // Add the listener to the selection model
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Check if a row is selected
+                if (jtable_member.getSelectedRow() != -1) {
+                    // Enable the delete button if a row is selected
+                    btn_memberDelete.setEnabled(true);
+                    btn_updateMember.setEnabled(true);
+                } else {
+                    // Disable the delete button if no row is selected
+                    btn_memberDelete.setEnabled(false);
+                    btn_updateMember.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    public void clearBookingInsertComboBoxes() {
+        cb_insertBookingMember.setSelectedItem(null);
+        cb_insertBookingDate.setSelectedItem(null);
+        cb_insertBookingTime.setSelectedItem(null);
+        cb_insertBookingCoach.setSelectedItem(null);
+    }
+
+   
+
+    public void setupMembershipTableListener() {
+        // Get the selection model of the table
+        ListSelectionModel selectionModel = jtable_membership.getSelectionModel();
+
+        // Add the listener to the selection model
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Check if a row is selected
+                if (jtable_membership.getSelectedRow() != -1) {
+                    // Enable the delete button if a row is selected
+                    btn_membershipDelete.setEnabled(true);
+                    btn_updateMembership.setEnabled(true);
+                } else {
+                    // Disable the delete button if no row is selected
+                    btn_membershipDelete.setEnabled(false);
+                    btn_updateMembership.setEnabled(false);
+                }
+            }
+        });
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MainFrame().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_activeMemberships;
+    public javax.swing.JButton btn_bookingDelete;
+    private javax.swing.JButton btn_bookingInsert;
+    private javax.swing.JButton btn_clearSelectionBookingInsert;
+    private javax.swing.JButton btn_clearSelectionBookingUpdate;
     private javax.swing.JButton btn_confirmFilterMembertbl;
+    private javax.swing.JButton btn_confirmInsertBooking;
     private javax.swing.JButton btn_insertMemberConfirm;
+    private javax.swing.JButton btn_insertMembershipConfirm;
     public javax.swing.JButton btn_memberDelete;
     private javax.swing.JButton btn_memberInsert;
+    public javax.swing.JButton btn_membershipDelete;
+    private javax.swing.JButton btn_membershipInsert;
     private javax.swing.JButton btn_resetFilterMember;
+    private javax.swing.JButton btn_resetFilterMembership;
+    public javax.swing.JButton btn_updateBooking;
+    private javax.swing.JButton btn_updateBookingConfirm;
     public javax.swing.JButton btn_updateMember;
     private javax.swing.JButton btn_updateMemberConfirm;
-    public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JButton btn_updateMembership;
+    private javax.swing.JButton btn_updateMembershipConfirm;
+    private javax.swing.JComboBox<String> cb_gymBranchInsertMembership;
+    private javax.swing.JComboBox<String> cb_gymBranchUpdateMembership;
+    private javax.swing.JComboBox<String> cb_insertBookingCoach;
+    private javax.swing.JComboBox<String> cb_insertBookingDate;
+    private javax.swing.JComboBox<String> cb_insertBookingMember;
+    private javax.swing.JComboBox<String> cb_insertBookingTime;
+    private javax.swing.JComboBox<String> cb_memberIdInsertMembership;
+    private javax.swing.JComboBox<String> cb_memberIdUpdateMembership;
+    private javax.swing.JComboBox<String> cb_updateBookingCoach;
+    private javax.swing.JComboBox<String> cb_updateBookingDate;
+    private javax.swing.JComboBox<String> cb_updateBookingMember;
+    private javax.swing.JComboBox<String> cb_updateBookingTime;
+    private com.toedter.calendar.JDateChooser datechooser_endDateInsertMembership;
+    private com.toedter.calendar.JDateChooser datechooser_endDateUpdateMembership;
+    private com.toedter.calendar.JDateChooser datechooser_startDateInsertMembership;
+    private com.toedter.calendar.JDateChooser datechooser_startDateUpdateMembership;
+    private javax.swing.JFrame jframe_insertBooking;
     private javax.swing.JFrame jframe_insertMember;
+    private javax.swing.JFrame jframe_insertMembership;
+    private javax.swing.JFrame jframe_updateBooking;
     private javax.swing.JFrame jframe_updateMember;
+    private javax.swing.JFrame jframe_updateMembership;
+    public javax.swing.JTable jtable_booking;
     public javax.swing.JTable jtable_member;
+    public javax.swing.JTable jtable_membership;
+    private javax.swing.JLabel label_bookingTable;
+    private javax.swing.JLabel label_coachInsertBooking;
+    private javax.swing.JLabel label_coachUpdateBooking;
+    private javax.swing.JLabel label_dateInsertBooking;
+    private javax.swing.JLabel label_dateUpdateBooking;
+    private javax.swing.JLabel label_endDateInsertMembership;
+    private javax.swing.JLabel label_endDateUpdateMembership;
     private javax.swing.JLabel label_firstNameFiltermembertbl;
+    private javax.swing.JLabel label_gymBranchInsertMembership;
+    private javax.swing.JLabel label_gymBranchUpdateMembership;
     private javax.swing.JLabel label_lastNameFiltermembertbl;
     private javax.swing.JLabel label_memberFname;
     private javax.swing.JLabel label_memberFname1;
     private javax.swing.JLabel label_memberID;
     private javax.swing.JLabel label_memberID1;
+    private javax.swing.JLabel label_memberInsertBooking;
+    private javax.swing.JLabel label_memberInsertMembership;
     private javax.swing.JLabel label_memberLname;
     private javax.swing.JLabel label_memberLname1;
     private javax.swing.JLabel label_memberPhone;
     private javax.swing.JLabel label_memberPhone1;
+    private javax.swing.JLabel label_memberUpdateBooking;
+    private javax.swing.JLabel label_memberUpdateMembership;
     private javax.swing.JLabel label_membersTable;
-    private javax.swing.JPanel panel_gym;
+    private javax.swing.JLabel label_membershipTable;
+    private javax.swing.JLabel label_startDateInsertMembership;
+    private javax.swing.JLabel label_startDateUpdateMembership;
+    private javax.swing.JLabel label_timeInsertBooking;
+    private javax.swing.JLabel label_timeUpdateBooking;
+    public javax.swing.JTabbedPane main_tabbedPane;
+    public javax.swing.JPanel panel_booking;
     public javax.swing.JPanel panel_member;
+    public javax.swing.JPanel panel_membership;
+    private javax.swing.JPanel panel_ofFrame_insertBookingForm;
     private javax.swing.JPanel panel_ofFrame_insertMemberForm;
+    private javax.swing.JPanel panel_ofFrame_insertMembershipForm;
+    private javax.swing.JPanel panel_ofFrame_updateBookingForm;
     private javax.swing.JPanel panel_ofFrame_updateMemberForm;
+    private javax.swing.JPanel panel_ofFrame_updateMembershipForm;
+    public javax.swing.JScrollPane scrlpn_tableBooking;
     public javax.swing.JScrollPane scrlpn_tableMember;
+    public javax.swing.JScrollPane scrlpn_tableMembership;
     private javax.swing.JTextField txt_filterFirstNameMemberTable;
     private javax.swing.JTextField txt_filterLastNameMemberTable;
     private javax.swing.JTextField txt_insert_memberFname;
