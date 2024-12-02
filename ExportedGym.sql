@@ -31,23 +31,18 @@ CREATE TABLE IF NOT EXISTS `booking` (
   KEY `fk_member_has_workout_class_workout_class1_idx` (`C_id`,`Class_date`,`Class_time`),
   KEY `fk_member_has_workout_class_member1_idx` (`M_id`),
   CONSTRAINT `fk_member_has_workout_class_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_member_has_workout_class_workout_class1` FOREIGN KEY (`C_id`, `Class_date`, `Class_time`) REFERENCES `workout_class` (`C_id`, `Class_date`, `Class_time`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_member_has_workout_class_workout_class1` FOREIGN KEY (`C_id`, `Class_date`, `Class_time`) REFERENCES `workout_class` (`C_id`, `Class_date`, `Class_time`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.booking: ~3 rows (approximately)
+-- Dumping data for table gymerfinal.booking: ~8 rows (approximately)
 DELETE FROM `booking`;
-INSERT INTO `booking` (`M_id`, `C_id`, `Class_date`, `Class_time`) VALUES
-	(2, 8, '2024-11-30', '20:00:00'),
-	(3, 15, '2024-11-28', '13:30:00'),
-	(4, 15, '2024-11-28', '13:30:00'),
-	(5, 15, '2024-11-28', '13:30:00');
 
 -- Dumping structure for table gymerfinal.coach
 DROP TABLE IF EXISTS `coach`;
 CREATE TABLE IF NOT EXISTS `coach` (
   `C_id` int(11) NOT NULL,
-  `C_Fname` varchar(45) DEFAULT NULL,
-  `C_Lname` varchar(45) DEFAULT NULL,
+  `C_Fname` varchar(45) DEFAULT '',
+  `C_Lname` varchar(45) DEFAULT '',
   `C_phone` varchar(10) DEFAULT NULL,
   `Salary` double DEFAULT NULL,
   `Bno` int(11) NOT NULL,
@@ -57,19 +52,17 @@ CREATE TABLE IF NOT EXISTS `coach` (
   CONSTRAINT `fk_coach_gym1` FOREIGN KEY (`Bno`) REFERENCES `gym` (`Bno`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.coach: ~10 rows (approximately)
+-- Dumping data for table gymerfinal.coach: ~8 rows (approximately)
 DELETE FROM `coach`;
 INSERT INTO `coach` (`C_id`, `C_Fname`, `C_Lname`, `C_phone`, `Salary`, `Bno`) VALUES
-	(2, 'Mark', 'Smith', '0534567890', 1000, 4),
-	(3, 'Liam', 'Johnson', '0541239876', 5000, 33),
 	(8, 'James', 'Taylor', '0538877665', 1000, 5),
-	(11, 'Thomas', 'White', '0561122334', 2000, 6),
-	(12, 'Ryan', 'Harris', '0531122334', 4000, 33),
+	(11, 'Abdu', 'Laboon', '0500500501', NULL, 55),
+	(12, 'Ryan', 'Harris', '0531122334', 4000, 34),
 	(13, 'Ahmed', 'Omar', '0584433221', 900, 6),
-	(14, 'Zaid', NULL, '0559988777', 1000, 5),
 	(15, 'Chris', 'Taylor', NULL, 900, 4),
-	(92, 'KAKA', NULL, NULL, NULL, 6),
-	(112, 'Khalid', 'Obaidah', '0501247652', NULL, 6);
+	(77, 'Mr34', NULL, '0500000000', NULL, 34),
+	(99, 'Gonzalo', 'Frenski', '0590059012', 900, 33),
+	(102, 'Kaka', ' ', '0530530530', NULL, 33);
 
 -- Dumping structure for table gymerfinal.fitness_data
 DROP TABLE IF EXISTS `fitness_data`;
@@ -85,11 +78,11 @@ CREATE TABLE IF NOT EXISTS `fitness_data` (
   CONSTRAINT `fk_FITNESS_DATA_MEMBER1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.fitness_data: ~2 rows (approximately)
+-- Dumping data for table gymerfinal.fitness_data: ~0 rows (approximately)
 DELETE FROM `fitness_data`;
 INSERT INTO `fitness_data` (`M_id`, `Record_number`, `Record_date`, `Height`, `Weight`, `Fat_rate`, `Muscle_mass`) VALUES
-	(1, 2, NULL, NULL, NULL, NULL, NULL),
-	(99, 1, NULL, NULL, NULL, NULL, NULL);
+	(2, 22, '2024-12-01', 1.5, NULL, NULL, NULL),
+	(14, 33, '2024-12-01', 1.65, 50, 3, 23);
 
 -- Dumping structure for table gymerfinal.gym
 DROP TABLE IF EXISTS `gym`;
@@ -106,9 +99,9 @@ INSERT INTO `gym` (`Bno`, `B_name`, `Address`) VALUES
 	(4, 'Al Sulaymaniyah', 'Tahlia Street, Riyadh, KSA'),
 	(5, 'Al Yasmin', 'King Salman Road, Riyadh, KSA'),
 	(6, 'Diriyah', 'Historic Diryah, Riyadh'),
-	(33, 'Jarir', 'King Abdullah Park, Riyadh, KSA'),
+	(33, 'Rabwa', 'King Abdullah Park, Riyadh, KSA'),
 	(34, 'Rawabi', 'Abdu,Jeddah,KSA'),
-	(55, 'Khaldiyah', 'Nassim,Jeddah');
+	(55, 'Khaldiya', 'Nassim,Jeddah');
 
 -- Dumping structure for table gymerfinal.member
 DROP TABLE IF EXISTS `member`;
@@ -121,16 +114,19 @@ CREATE TABLE IF NOT EXISTS `member` (
   UNIQUE KEY `M_phone` (`M_phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.member: ~11 rows (approximately)
+-- Dumping data for table gymerfinal.member: ~10 rows (approximately)
 DELETE FROM `member`;
 INSERT INTO `member` (`M_id`, `M_Fname`, `M_Lname`, `M_phone`) VALUES
-	(1, 'Faisal', 'Alharbi', '0501010550'),
 	(2, 'Abdullah', 'Alqahtani', '0539876543'),
-	(3, 'Mohammed', 'Alshehri', '0548765432'),
-	(4, 'Sultan', 'Aldosari', '0561122334'),
 	(5, 'Turki', 'Almutairi', '0554455667'),
-	(12, 'Khad', 'Chad', '0501491491'),
-	(99, 'AbdulKhallaq', 'Khan', '0501010551');
+	(7, 'David', 'Miller', '0578901234'),
+	(8, 'Isabella', 'Davis', '0589012345'),
+	(10, 'Charlotte', 'Martinez', '0511234567'),
+	(14, 'Ava', 'Wilson', '0555456789'),
+	(22, 'Alexander', 'Gonzalez', '0515678932'),
+	(23, 'Ethan', 'Walker', '0580398745'),
+	(39, 'Henry', 'Adams', '0523901748'),
+	(41, 'Eva', 'Hernandez', '0531478295');
 
 -- Dumping structure for table gymerfinal.membership_at
 DROP TABLE IF EXISTS `membership_at`;
@@ -138,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `membership_at` (
   `M_id` int(11) NOT NULL,
   `Bno` int(11) NOT NULL,
   `Start_date` date NOT NULL,
-  `End_date` date DEFAULT NULL,
+  `End_date` date DEFAULT (`Start_date` + interval 30 day),
   PRIMARY KEY (`M_id`,`Bno`,`Start_date`) USING BTREE,
   KEY `fk_member_has_gym_gym1_idx` (`Bno`),
   KEY `fk_member_has_gym_member1_idx` (`M_id`),
@@ -146,12 +142,21 @@ CREATE TABLE IF NOT EXISTS `membership_at` (
   CONSTRAINT `fk_member_has_gym_member1` FOREIGN KEY (`M_id`) REFERENCES `member` (`M_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.membership_at: ~3 rows (approximately)
+-- Dumping data for table gymerfinal.membership_at: ~12 rows (approximately)
 DELETE FROM `membership_at`;
 INSERT INTO `membership_at` (`M_id`, `Bno`, `Start_date`, `End_date`) VALUES
-	(99, 4, '2025-11-30', '2053-11-30'),
-	(99, 33, '2024-01-01', '2024-11-16'),
-	(99, 33, '2024-11-21', '2024-12-01');
+	(2, 6, '2029-12-06', '2029-12-31'),
+	(2, 34, '2024-12-02', '2025-01-01'),
+	(5, 6, '2024-12-31', '2025-12-03'),
+	(5, 33, '2024-08-01', '2025-10-01'),
+	(7, 33, '2024-12-31', '2025-01-30'),
+	(8, 6, '2024-12-26', '2025-12-01'),
+	(10, 4, '2024-12-01', '2024-12-31'),
+	(14, 5, '2025-02-01', '2025-03-03'),
+	(22, 5, '2023-11-11', '2026-01-01'),
+	(22, 34, '2024-12-01', '2024-12-31'),
+	(23, 6, '2024-12-01', '2024-12-31'),
+	(23, 33, '2025-01-01', '2025-01-31');
 
 -- Dumping structure for table gymerfinal.workout_class
 DROP TABLE IF EXISTS `workout_class`;
@@ -167,12 +172,16 @@ CREATE TABLE IF NOT EXISTS `workout_class` (
   CONSTRAINT `fk_workout_class_coach1` FOREIGN KEY (`C_id`) REFERENCES `coach` (`C_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Dumping data for table gymerfinal.workout_class: ~3 rows (approximately)
+-- Dumping data for table gymerfinal.workout_class: ~7 rows (approximately)
 DELETE FROM `workout_class`;
 INSERT INTO `workout_class` (`C_id`, `W_name`, `Class_date`, `Class_time`, `Max_capacity`) VALUES
-	(8, 'Maxabs', '2024-11-30', '20:00:00', 8),
-	(13, 'Chest', '2024-11-29', '22:00:00', 7),
-	(15, 'Abs', '2024-11-28', '13:30:00', 5);
+	(8, 'Maxabs', '2025-11-30', '20:00:00', 8),
+	(11, 'Cardio', '2025-11-28', '20:00:00', 5),
+	(12, 'Cold', '2025-01-01', '18:13:57', 5),
+	(13, 'Chest', '2025-11-29', '22:00:00', 7),
+	(15, 'Abs', '2026-11-28', '13:30:00', 5),
+	(77, 'Klarking', '2024-12-02', '21:00:00', 5),
+	(99, 'HIT', '2025-01-02', '06:00:00', 5);
 
 -- Dumping structure for trigger gymerfinal.check_active_memberships_insert
 DROP TRIGGER IF EXISTS `check_active_memberships_insert`;
@@ -250,6 +259,40 @@ CREATE TRIGGER `Check_coaches_before_branch_delete` BEFORE DELETE ON `gym` FOR E
     IF EXISTS (SELECT 1 FROM coach WHERE coach.Bno = OLD.Bno) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'There are coaches in this branch in Table(coach), please move them to another branch before deleting this branch.';
+    END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Dumping structure for trigger gymerfinal.check_exists_membership_before_booking
+DROP TRIGGER IF EXISTS `check_exists_membership_before_booking`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `check_exists_membership_before_booking` BEFORE INSERT ON `booking` FOR EACH ROW BEGIN
+    IF NOT EXISTS (
+    	SELECT 1 FROM workout_class W INNER JOIN coach C
+		ON W.C_id = C.C_id INNER JOIN membership_at MT ON MT.Bno = C.Bno
+      WHERE MT.M_id = NEW.M_id AND W.C_id = NEW.C_id AND CURDATE() <= MT.End_date
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'This member has no active membership at the selected branch.';
+    END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Dumping structure for trigger gymerfinal.check_exists_membership_before_update
+DROP TRIGGER IF EXISTS `check_exists_membership_before_update`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `check_exists_membership_before_update` BEFORE UPDATE ON `booking` FOR EACH ROW BEGIN
+    IF NOT EXISTS (
+    	SELECT 1 FROM workout_class W INNER JOIN coach C
+		ON W.C_id = C.C_id INNER JOIN membership_at MT ON MT.Bno = C.Bno
+      WHERE MT.M_id = NEW.M_id AND W.C_id = NEW.C_id AND CURDATE() <= MT.End_date
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'This member has no active membership at the selected branch.';
     END IF;
 END//
 DELIMITER ;
